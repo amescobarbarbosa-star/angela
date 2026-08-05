@@ -1,7 +1,14 @@
 # Encargo de tarta · 1er cumpleaños de Mariana
 
+Hay dos familias de diseños:
+
+- **Fondant** (`salida/fondant-0X-....jpg`) — la línea de las fotos de referencia:
+  fondant liso en rosa empolvado, crema y verde salvia, con figuras modeladas y oro.
+- **Iridiscente** (`salida/tarta-0X-....jpg`) — la línea de la decoración comprada:
+  buttercream en degradado pastel con nacarados y pan de oro.
+
 Texto listo para copiar y pegar en WhatsApp a la pastelería, junto con la
-imagen del diseño elegido (`salida/tarta-0X-....jpg`).
+imagen del diseño elegido.
 
 ---
 
@@ -16,7 +23,38 @@ imagen del diseño elegido (`salida/tarta-0X-....jpg`).
 
 ---
 
-## Ficha técnica común a los cuatro diseños
+## Familia fondant · paleta rosa empolvado, crema, salvia y oro
+
+Paleta: rosa empolvado `#F4CFD5` · crema `#FAF3E8` · verde salvia `#C8D6B4` · oro `#C79A3E`.
+Medidas comunes: piso inferior Ø 20 cm, piso superior Ø 15 cm, altura ≈ 20 cm, 25–30 raciones.
+
+### F1 · Jirafa y palmeras
+- **Cobertura:** fondant liso; piso inferior rosa empolvado, piso superior crema, banda y lazo de oro en la unión.
+- **Figuras:** jirafa sentada con lacito (sobre el piso superior) y elefantito (apoyado en el piso inferior), en pasta de goma.
+- **Detalles:** palmera y hojas de monstera en verde salvia, racimo de bolas de fondant (rosa, crema, salvia y oro) desbordando el borde, flores y perlas doradas en la base.
+- **Placa:** «Mariana» en oro sobre placa festoneada; número «1» rosa con perfil dorado.
+
+### F2 · Osito y banderines
+- **Cobertura:** fondant liso; inferior rosa empolvado con cinta salvia en la base, superior crema con cinta rosa en la unión.
+- **Figuras:** osita con vestido rosa y lacito; globo de fondant sobre varilla dorada.
+- **Detalles:** guirnalda de banderines en salvia, rosa y crema, corazón dorado, corazoncitos sueltos y lazo de fondant salvia.
+- **Placa:** «Mariana» en oro sobre placa festoneada; número «1» rosa con perfil dorado.
+
+### F3 · Salvia y oro
+- **Cobertura:** fondant liso a dos tonos; piso inferior verde salvia, piso superior crema.
+- **Figuras:** jirafa sentada con lacito, bolas de fondant y ramitas de eucalipto.
+- **Detalles:** placa festoneada con «Mariana» en oro, flor y hojas al pie, corazón dorado, lunares rosa y oro.
+- **Número:** «1» grande en rosa empolvado con perfil dorado sobre el piso superior.
+
+### F4 · Corona de flores *(la más sencilla y económica)*
+- **Cobertura:** fondant liso; inferior rosa empolvado, superior crema, con cinta y lazo de fondant rosa en la unión.
+- **Figuras:** ninguna de animales; solo el globo de fondant sobre varilla dorada.
+- **Detalles:** corona de florecitas y hojas alrededor del «1» dorado, ramitas de eucalipto y corazón junto al nombre.
+- **Placa:** «Mariana» escrito en oro directamente sobre el fondant del piso inferior.
+
+---
+
+## Familia iridiscente · ficha técnica común a los cuatro diseños
 
 | Concepto | Detalle |
 |---|---|
@@ -52,6 +90,11 @@ imagen del diseño elegido (`salida/tarta-0X-....jpg`).
 - **Sabor sugerido:** bizcocho de vainilla con relleno de chocolate blanco.
 
 ---
+
+### Preguntas útiles al encargar (familia fondant)
+- Precio de cada figura modelada aparte: suelen cobrarse por unidad.
+- Si trabajan el fondant en verano: con calor conviene confirmar transporte y conservación.
+- Si el «1» y la placa los hacen ellos o hay que llevar topper.
 
 ### Preguntas útiles al encargar
 - Confirmación de raciones reales según la altura de bizcocho que trabajen.

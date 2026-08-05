@@ -8,10 +8,20 @@ tarta de dos pisos para encargar en la pastelería.
 
 ```
 salida/
-  invitacion-mariana.jpg          ← invitación lista para enviar por WhatsApp
+  invitacion-mariana.jpg          ← invitación principal, lista para WhatsApp
   invitacion-mariana.png          ← original sin pérdida (2160 × 3840)
-  tartas-dos-pisos.jpg/.png       ← lámina con los cuatro diseños
-  tarta-01-nube-iridiscente.*     ← ficha suelta de cada diseño
+  invitacion-alt-A-arco-de-globos.*  ← alternativas de invitación
+  invitacion-alt-B-acuarela.*
+  invitacion-alt-C-jardin.*
+
+  tartas-fondant.jpg/.png         ← lámina fondant (línea de las fotos de referencia)
+  fondant-01-jirafa-y-palmeras.*
+  fondant-02-osito-y-banderines.*
+  fondant-03-salvia-y-oro.*
+  fondant-04-corona-de-flores.*
+
+  tartas-dos-pisos.jpg/.png       ← lámina iridiscente (línea de la decoración)
+  tarta-01-nube-iridiscente.*
   tarta-02-petalos-de-nube.*
   tarta-03-globos-de-azucar.*
   tarta-04-arcoiris-suave.*
@@ -21,10 +31,19 @@ encargo-pasteleria.md             ← ficha técnica para la pastelería
 filosofia-diseno.md               ← criterio visual que guía todas las piezas
 
 src/
-  invitacion.html                 ← fuente de la invitación
-  tartas.html                     ← fuente de las tartas
+  invitacion.html                 ← fuente de la invitación principal
+  invitaciones-alt.html           ← fuente de las tres alternativas
+  tartas.html                     ← fuente de las tartas iridiscentes
+  tartas-fondant.html             ← fuente de las tartas de fondant
   render.js                       ← exporta los HTML a PNG/JPG con Chromium
 ```
+
+## Dos paletas
+
+La decoración comprada es pastel iridiscente; las fotos de tarta de referencia son
+rosa empolvado, crema y verde salvia. Las piezas están hechas en las dos líneas para
+poder elegir, y cualquiera de los diseños de fondant se puede repintar en los colores
+de la decoración (o al revés) cambiando la paleta en el `<script>` del HTML.
 
 ## Paleta
 

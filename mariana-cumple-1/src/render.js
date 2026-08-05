@@ -34,6 +34,8 @@ const FONTS = [
     viewport: { width: Number(w), height: Number(h) },
     deviceScaleFactor: 2,
   });
+  page.on('pageerror', (e) => console.error('✗ error en la página:', e.message));
+  page.on('console', (m) => { if (m.type() === 'error') console.error('✗ consola:', m.text()); });
   await page.goto('file://' + path.resolve(tmp));
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(400);
