@@ -12,7 +12,7 @@ imagen del diseño elegido (`salida/tarta-0X-....jpg`).
 > para 25–30 raciones. La decoración de la fiesta es en tonos pastel iridiscentes
 > (melocotón, rosa, lila, azul agua y menta) con detalles dorados, y me gustaría que la
 > tarta siguiera esa misma paleta. ¿Me podéis decir precio y si la tenéis disponible
-> para el día [FECHA]? ¡Gracias!
+> para el sábado 22 de agosto por la tarde? La fiesta empieza a las 17:30. ¡Gracias!
 
 ---
 
