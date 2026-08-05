@@ -1,0 +1,256 @@
+<meta charset="utf-8">
+<title>Invitación Mariana</title>
+<style>
+/*@FONTS@*/
+
+:root{
+  --perla:#FDFBF8;
+  --melocoton:#FFD9B8;
+  --mantequilla:#FBE7B0;
+  --rosa:#F9C6D9;
+  --lila:#DCC8F0;
+  --agua:#C6E4F2;
+  --menta:#BEEBD6;
+  --oro:#C79A3E;
+  --oro-claro:#F0D89A;
+  --tinta:#7A6474;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden}
+body{font-family:'Jura',sans-serif;background:#fff}
+
+.lienzo{position:relative;width:1080px;height:1920px;overflow:hidden;
+  background:
+    radial-gradient(120% 70% at 12% -6%,  rgba(255,217,184,.95) 0%, rgba(255,217,184,0) 58%),
+    radial-gradient(100% 60% at 92% 4%,   rgba(251,231,176,.80) 0%, rgba(251,231,176,0) 55%),
+    radial-gradient(120% 78% at 88% 34%,  rgba(220,200,240,.85) 0%, rgba(220,200,240,0) 62%),
+    radial-gradient(130% 70% at 6% 52%,   rgba(249,198,217,.80) 0%, rgba(249,198,217,0) 60%),
+    radial-gradient(120% 62% at 96% 78%,  rgba(198,228,242,.80) 0%, rgba(198,228,242,0) 58%),
+    radial-gradient(140% 66% at 14% 104%, rgba(190,235,214,.85) 0%, rgba(190,235,214,0) 60%),
+    radial-gradient(90% 46% at 50% 62%,   rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 70%),
+    linear-gradient(168deg,#FFF6EC 0%,#FDF2F6 34%,#F7F1FB 62%,#EFF8F6 100%);
+}
+/* velo nacarado + grano fino */
+.velo{position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(102deg, rgba(255,255,255,.032) 0 3px, rgba(255,255,255,0) 3px 11px),
+    radial-gradient(65% 40% at 50% 50%, rgba(255,255,255,.30), rgba(255,255,255,0) 72%);
+  mix-blend-mode:screen}
+.grano{position:absolute;inset:-40px;opacity:.16;mix-blend-mode:multiply}
+
+/* marco de oro */
+.marco{position:absolute;inset:52px;border:1.1px solid rgba(199,154,62,.42);border-radius:2px}
+.marco:after{content:"";position:absolute;inset:11px;border:.7px solid rgba(199,154,62,.24);border-radius:1px}
+
+svg{display:block}
+.confeti,.arco,.arco-pie{position:absolute;left:0}
+.confeti{top:0;pointer-events:none}
+.arco{top:0}
+.arco-pie{bottom:0}
+
+/* ---- bloque central ---- */
+.centro{position:absolute;left:0;right:0;top:566px;height:1020px;
+  display:flex;flex-direction:column;align-items:center;text-align:center}
+
+.medallon{position:relative;width:78px;height:78px;border-radius:50%;
+  border:1px solid rgba(199,154,62,.55);
+  background:radial-gradient(70% 70% at 34% 26%,rgba(255,255,255,.92),rgba(255,255,255,.42));
+  box-shadow:0 2px 10px rgba(170,140,110,.10), inset 0 0 0 5px rgba(255,255,255,.35);
+  display:flex;align-items:center;justify-content:center}
+.medallon span{font-family:'Gloock',serif;font-size:40px;line-height:1;
+  background:linear-gradient(172deg,#E4C486,#C79A3E 46%,#9E7328 74%,#E7CC93);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+.cejilla{position:relative;font-family:'Jura',sans-serif;font-weight:500;
+  font-size:19px;letter-spacing:.62em;text-indent:.62em;color:#B08A46;
+  text-transform:uppercase}
+
+.nombre{position:relative;margin-top:46px;font-family:'Italiana',serif;
+  font-size:176px;line-height:1;letter-spacing:.045em;text-indent:.045em;
+  background:linear-gradient(174deg,#E4C486 0%,#C79A3E 40%,#9E7328 68%,#E7CC93 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 1px rgba(158,115,40,.16))}
+
+.subtitulo{position:relative;margin-top:14px;font-family:'Nothing',cursive;
+  font-size:76px;line-height:1.1;color:#8A6E80;letter-spacing:.01em}
+
+.filete{position:relative;margin-top:44px;display:flex;align-items:center;gap:20px}
+.filete>span{display:block;width:132px;height:1px;
+  background:linear-gradient(90deg,rgba(199,154,62,0),rgba(199,154,62,.75))}
+.filete>span:last-child{background:linear-gradient(90deg,rgba(199,154,62,.75),rgba(199,154,62,0))}
+
+.datos{position:relative;margin-top:44px;display:flex;flex-direction:column;gap:34px}
+.dato{display:flex;flex-direction:column;align-items:center;gap:9px}
+.dato .et{font-family:'Jura',sans-serif;font-weight:500;font-size:16px;
+  letter-spacing:.46em;text-indent:.46em;color:#B08A46;text-transform:uppercase}
+.dato .va{font-family:'Poiret',sans-serif;font-size:41px;line-height:1.24;
+  letter-spacing:.045em;color:#6E586A}
+.dato .va b{font-weight:400;font-family:'Poiret',sans-serif}
+
+.pie{position:absolute;left:0;right:0;bottom:356px;text-align:center}
+.pie .rsvp{font-family:'Jura',sans-serif;font-weight:500;font-size:16px;
+  letter-spacing:.40em;text-indent:.40em;color:#B08A46;text-transform:uppercase}
+.pie .tel{margin-top:12px;font-family:'Poiret',sans-serif;font-size:29px;
+  letter-spacing:.10em;color:#6E586A}
+</style>
+
+<div class="lienzo">
+  <svg class="grano" width="1160" height="2000"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
+  <div class="velo"></div>
+
+  <div class="marco"></div>
+
+  <svg class="arco"    id="arco"    width="1080" height="560"></svg>
+  <svg class="arco-pie" id="arcoPie" width="1080" height="330"></svg>
+  <svg class="confeti" id="confeti" width="1080" height="1920"></svg>
+
+  <div class="centro">
+    <div class="cejilla">Te invitamos a celebrar</div>
+    <div class="nombre">Mariana</div>
+    <div class="subtitulo">cumple un añito</div>
+    <div class="filete"><span></span>
+      <div class="medallon"><span>1</span></div>
+      <span></span></div>
+    <div class="datos">
+      <div class="dato"><div class="et">Fecha</div><div class="va">Sábado 00 de mes</div></div>
+      <div class="dato"><div class="et">Hora</div><div class="va">00:00 h</div></div>
+      <div class="dato"><div class="et">Lugar</div><div class="va">Nombre del lugar<br><b>Dirección</b></div></div>
+    </div>
+  </div>
+
+  <div class="pie">
+    <div class="rsvp">Confirma tu asistencia</div>
+    <div class="tel">000 00 00 00</div>
+  </div>
+</div>
+
+<script>
+/* ---------- utilidades ---------- */
+const NS='http://www.w3.org/2000/svg';
+const el=(n,a={})=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e};
+let _s=20260912; const rnd=()=>{_s=(_s*1664525+1013904223)%4294967296;return _s/4294967296};
+
+const PASTEL=[
+  ['#FFE2C6','#F7C08E'], // melocotón
+  ['#FDF0C4','#F2D77F'], // mantequilla
+  ['#FCD9E6','#F2A6C2'], // rosa
+  ['#E8DAF7','#C7ADE6'], // lila
+  ['#D8ECF8','#A9CFE6'], // agua
+  ['#CFF1E2','#9FDCC1'], // menta
+  ['#FFFFFF','#EADFE6'], // perla
+];
+
+/* ---------- globo ---------- */
+let uid=0;
+function globo(svg,cx,cy,r,pareja,rot=0,op=1){
+  const id='g'+(uid++);
+  const defs=svg.querySelector('defs')||svg.appendChild(el('defs'));
+  const rg=el('radialGradient',{id:id,cx:'34%',cy:'28%',r:'78%'});
+  rg.appendChild(el('stop',{offset:'0%','stop-color':'#FFFFFF'}));
+  rg.appendChild(el('stop',{offset:'26%','stop-color':pareja[0]}));
+  rg.appendChild(el('stop',{offset:'78%','stop-color':pareja[1]}));
+  rg.appendChild(el('stop',{offset:'100%','stop-color':pareja[1]}));
+  defs.appendChild(rg);
+
+  const g=el('g',{transform:`rotate(${rot} ${cx} ${cy})`,opacity:op});
+  const ry=r*1.16;
+  // nudo
+  g.appendChild(el('path',{d:`M${cx-r*.10} ${cy+ry-1} L${cx+r*.10} ${cy+ry-1} L${cx} ${cy+ry+r*.15} Z`,
+    fill:pareja[1],opacity:.9}));
+  // cuerpo
+  g.appendChild(el('ellipse',{cx,cy,rx:r,ry,fill:`url(#${id})`}));
+  // borde suave
+  g.appendChild(el('ellipse',{cx,cy,rx:r,ry,fill:'none',stroke:pareja[1],'stroke-opacity':.35,'stroke-width':.9}));
+  // brillo alargado
+  g.appendChild(el('ellipse',{cx:cx-r*.34,cy:cy-ry*.34,rx:r*.19,ry:ry*.27,fill:'#fff',opacity:.62,
+    transform:`rotate(-24 ${cx-r*.34} ${cy-ry*.34})`}));
+  g.appendChild(el('circle',{cx:cx-r*.13,cy:cy-ry*.55,r:r*.055,fill:'#fff',opacity:.55}));
+  // sombra inferior interna
+  g.appendChild(el('ellipse',{cx:cx+r*.16,cy:cy+ry*.40,rx:r*.60,ry:ry*.34,fill:pareja[1],opacity:.22}));
+  svg.appendChild(g);
+}
+
+/* ---------- guirnalda con luz ---------- */
+function guirnalda(svg,pts,W){
+  // cable finísimo que recorre la guirnalda
+  let d='M'+pts[0][0]+' '+pts[0][1];
+  for(let i=1;i<pts.length;i++){
+    const [x0,y0]=pts[i-1],[x1,y1]=pts[i];
+    d+=` Q${(x0+x1)/2} ${Math.max(y0,y1)+16} ${x1} ${y1}`;
+  }
+  svg.appendChild(el('path',{d,fill:'none',stroke:'#C79A3E','stroke-opacity':.30,'stroke-width':1}));
+  // lucecitas
+  const p=svg.appendChild(el('path',{d,fill:'none',stroke:'none'}));
+  const L=p.getTotalLength();
+  for(let i=0;i<=64;i++){
+    const q=p.getPointAtLength(L*i/64);
+    const r=1.5+rnd()*1.3;
+    svg.appendChild(el('circle',{cx:q.x,cy:q.y,r:r*2.6,fill:'#F6E2AE',opacity:.28}));
+    svg.appendChild(el('circle',{cx:q.x,cy:q.y,r,fill:'#FBF0CE',opacity:.95}));
+  }
+}
+
+/* ---------- arco superior ---------- */
+(function(){
+  const svg=document.getElementById('arco'),W=1080;
+  const pts=[];
+  const N=17;
+  for(let i=0;i<N;i++){
+    const t=i/(N-1);
+    const x=18+t*(W-36);
+    const y=250-Math.sin(Math.PI*t)*138 + (rnd()-.5)*26;
+    pts.push([x,y]);
+  }
+  guirnalda(svg,pts,W);
+  pts.forEach(([x,y],i)=>{
+    const t=i/(N-1);
+    const r=(30+Math.sin(Math.PI*t)*17)*(.82+rnd()*.36);
+    globo(svg,x,y-r*.35,r,PASTEL[(i*3+1)%PASTEL.length],(rnd()-.5)*22,1);
+  });
+  // pequeños globos satélite
+  for(let i=0;i<5;i++){
+    const x=70+rnd()*(W-140), y=292+rnd()*96;
+    globo(svg,x,y,8+rnd()*9,PASTEL[Math.floor(rnd()*PASTEL.length)],(rnd()-.5)*30,.50+rnd()*.26);
+  }
+})();
+
+/* ---------- guirnalda inferior ---------- */
+(function(){
+  const svg=document.getElementById('arcoPie'),W=1080;
+  const N=15,pts=[];
+  for(let i=0;i<N;i++){
+    const t=i/(N-1);
+    const x=14+t*(W-28);
+    const y=132+Math.sin(Math.PI*t)*118 + (rnd()-.5)*20;
+    pts.push([x,y]);
+  }
+  guirnalda(svg,pts,W);
+  pts.forEach(([x,y],i)=>{
+    const t=i/(N-1);
+    const r=(21+Math.sin(Math.PI*t)*13)*(.82+rnd()*.34);
+    globo(svg,x,y+r*.3,r,PASTEL[(i*5+3)%PASTEL.length],(rnd()-.5)*20,.96);
+  });
+})();
+
+/* ---------- confeti dorado ---------- */
+(function(){
+  const svg=document.getElementById('confeti');
+  const dentro=(x,y)=>x>92&&x<988&&y>600&&y<1600;      // zona de texto: limpia
+  const arriba=(y)=>y<470;                              // zona de globos: limpia
+  const estrella=(x,y,s,o)=>{
+    svg.appendChild(el('path',{d:`M${x} ${y-s} Q${x+s*.16} ${y-s*.16} ${x+s} ${y}
+      Q${x+s*.16} ${y+s*.16} ${x} ${y+s} Q${x-s*.16} ${y+s*.16} ${x-s} ${y}
+      Q${x-s*.16} ${y-s*.16} ${x} ${y-s} Z`,fill:'#C79A3E',opacity:o}));
+  };
+  let n=0,guard=0;
+  while(n<190&&guard++<6000){
+    const x=26+rnd()*1028, y=26+rnd()*1868;
+    if(dentro(x,y)||arriba(y)) continue;
+    const t=rnd();
+    if(t<.42) estrella(x,y,3.4+rnd()*7.2,.22+rnd()*.5);
+    else if(t<.80) svg.appendChild(el('circle',{cx:x,cy:y,r:1+rnd()*2.6,fill:'#C79A3E',opacity:.18+rnd()*.42}));
+    else svg.appendChild(el('circle',{cx:x,cy:y,r:1.6+rnd()*3.4,fill:'#FFFFFF',opacity:.35+rnd()*.4}));
+    n++;
+  }
+})();
+</script>

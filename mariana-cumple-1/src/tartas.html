@@ -1,0 +1,419 @@
+<meta charset="utf-8">
+<title>Tartas — Mariana</title>
+<style>
+/*@FONTS@*/
+:root{
+  --oro:#C79A3E; --oro-suave:#B08A46; --tinta:#6E586A; --tinta-2:#8A7688;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1240px;height:2100px}
+body{
+  background:
+    radial-gradient(110% 60% at 8% -4%, rgba(255,217,184,.55) 0%, rgba(255,217,184,0) 60%),
+    radial-gradient(90% 50% at 96% 6%, rgba(220,200,240,.50) 0%, rgba(220,200,240,0) 58%),
+    radial-gradient(110% 55% at 4% 96%, rgba(190,235,214,.45) 0%, rgba(190,235,214,0) 60%),
+    radial-gradient(90% 50% at 98% 92%, rgba(249,198,217,.45) 0%, rgba(249,198,217,0) 58%),
+    linear-gradient(170deg,#FFFAF4 0%,#FDF6F8 48%,#F4F9F8 100%);
+  font-family:'Outfit',sans-serif;color:var(--tinta)}
+
+.hoja{position:relative;width:1240px;height:2100px;padding:74px 76px 60px}
+.marco{position:absolute;inset:46px;border:1px solid rgba(199,154,62,.34);pointer-events:none}
+.marco:after{content:"";position:absolute;inset:10px;border:.7px solid rgba(199,154,62,.18)}
+
+header{text-align:center;margin-bottom:44px}
+.kicker{font-family:'Jura',sans-serif;font-weight:500;font-size:14px;letter-spacing:.52em;
+  text-indent:.52em;color:var(--oro-suave);text-transform:uppercase}
+h1{margin-top:16px;font-family:'Italiana',serif;font-size:78px;line-height:1;letter-spacing:.04em;
+  background:linear-gradient(172deg,#E4C486,#C79A3E 45%,#9E7328 72%,#E7CC93);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:12px;font-family:'Nothing',cursive;font-size:34px;color:#8A6E80}
+.regla{margin:26px auto 0;display:flex;align-items:center;justify-content:center;gap:16px}
+.regla i{display:block;width:150px;height:1px;background:linear-gradient(90deg,rgba(199,154,62,0),rgba(199,154,62,.7))}
+.regla i:last-child{background:linear-gradient(90deg,rgba(199,154,62,.7),rgba(199,154,62,0))}
+
+.rejilla{display:grid;grid-template-columns:1fr 1fr;gap:46px 44px}
+
+.carta{position:relative;background:linear-gradient(168deg,rgba(255,255,255,.86),rgba(255,255,255,.62));
+  border:1px solid rgba(199,154,62,.30);padding:22px 26px 26px;
+  box-shadow:0 10px 30px rgba(140,110,130,.07)}
+.carta .escena{position:relative;height:322px;display:flex;align-items:flex-end;justify-content:center;
+  background:
+    radial-gradient(72% 58% at 50% 42%, rgba(255,255,255,.95), rgba(255,255,255,0) 72%),
+    linear-gradient(180deg,rgba(252,247,250,.9),rgba(247,250,250,.55));
+  border-bottom:.7px solid rgba(199,154,62,.20)}
+.carta h2{margin-top:20px;font-family:'Italiana',serif;font-size:37px;line-height:1.1;
+  letter-spacing:.035em;color:#8A6A2F}
+.carta .num{position:absolute;top:20px;right:26px;font-family:'Jura',sans-serif;font-weight:500;
+  font-size:13px;letter-spacing:.34em;color:var(--oro-suave)}
+.carta .lema{margin-top:7px;font-family:'Jura',sans-serif;font-weight:300;font-size:14.5px;
+  letter-spacing:.24em;text-transform:uppercase;color:#A2879B}
+
+.muestras{margin-top:16px;display:flex;gap:7px}
+.muestras b{display:block;width:26px;height:26px;border-radius:50%;
+  box-shadow:inset 0 0 0 .8px rgba(255,255,255,.85), 0 1px 3px rgba(120,100,115,.16)}
+
+dl{margin-top:16px;display:grid;grid-template-columns:104px 1fr;gap:9px 12px}
+dt{font-family:'Jura',sans-serif;font-weight:500;font-size:11px;letter-spacing:.20em;
+  text-transform:uppercase;color:var(--oro-suave);padding-top:3px}
+dd{font-size:15px;line-height:1.42;color:var(--tinta)}
+dd em{font-style:normal;color:var(--tinta-2)}
+
+footer{position:absolute;left:76px;right:76px;bottom:64px;text-align:center}
+.paleta{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;
+  font-family:'Jura',sans-serif;font-weight:300;font-size:12.5px;letter-spacing:.16em;
+  color:#9A8394;text-transform:uppercase}
+.paleta span{display:flex;align-items:center;gap:8px}
+.paleta u{display:block;width:13px;height:13px;border-radius:50%;text-decoration:none;
+  box-shadow:inset 0 0 0 .8px rgba(255,255,255,.9)}
+.nota{margin-top:16px;font-family:'Jura',sans-serif;font-weight:300;font-size:12.5px;
+  letter-spacing:.26em;text-transform:uppercase;color:#B09CAB}
+</style>
+
+<div class="hoja">
+  <div class="marco"></div>
+  <header>
+    <div class="kicker">Primer cumpleaños · Mariana</div>
+    <h1>Cuatro tartas</h1>
+    <div class="sub">dos pisos · para la pastelería</div>
+    <div class="regla"><i></i>
+      <svg width="15" height="15" viewBox="0 0 18 18"><path d="M9 0 L10.5 7.5 L18 9 L10.5 10.5 L9 18 L7.5 10.5 L0 9 L7.5 7.5 Z" fill="#C79A3E" opacity=".8"/></svg>
+      <i></i></div>
+  </header>
+  <div class="rejilla" id="rejilla"></div>
+  <footer>
+    <div class="paleta" id="paleta"></div>
+    <div class="nota">Paleta tomada de la decoración · acabado nacarado · detalles en oro</div>
+  </footer>
+</div>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+const el=(n,a={})=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e};
+let _s=112026; const rnd=()=>{_s=(_s*1664525+1013904223)%4294967296;return _s/4294967296};
+let uid=0;
+
+const C={melocoton:'#FFD9B8',mantequilla:'#FBE7B0',rosa:'#F9C6D9',lila:'#DCC8F0',
+         agua:'#C6E4F2',menta:'#BEEBD6',perla:'#FFFDFB',oro:'#C79A3E'};
+
+/* ---------- infraestructura svg ---------- */
+function nuevoSvg(){
+  const s=el('svg',{width:'440',height:'322',viewBox:'0 0 440 322'});
+  s.appendChild(el('defs')); return s;
+}
+function lg(svg,id,stops,vert=true){
+  const g=el('linearGradient',{id,x1:'0',y1:vert?'0':'0',x2:vert?'0':'1',y2:vert?'1':'0'});
+  stops.forEach(([o,c,op])=>g.appendChild(el('stop',{offset:o,'stop-color':c,'stop-opacity':op===undefined?1:op})));
+  svg.querySelector('defs').appendChild(g); return `url(#${id})`;
+}
+function rg(svg,id,stops,cx='34%',cy='28%',r='76%'){
+  const g=el('radialGradient',{id,cx,cy,r});
+  stops.forEach(([o,c,op])=>g.appendChild(el('stop',{offset:o,'stop-color':c,'stop-opacity':op===undefined?1:op})));
+  svg.querySelector('defs').appendChild(g); return `url(#${id})`;
+}
+
+/* cilindro de tarta: cuerpo + tapa + volumen */
+function piso(svg,cx,yTop,yBot,w,relleno,tapa){
+  const rx=w/2, ry=w*.062, g=el('g');
+  g.appendChild(el('path',{d:`M${cx-rx} ${yTop} L${cx-rx} ${yBot} A${rx} ${ry} 0 0 0 ${cx+rx} ${yBot} L${cx+rx} ${yTop} Z`,fill:relleno}));
+  const vol=lg(svg,'v'+(uid++),[[0,'#6E586A',.16],['16%','#6E586A',0],['62%','#FFFFFF',.16],['86%','#6E586A',0],[1,'#6E586A',.13]],false);
+  g.appendChild(el('path',{d:`M${cx-rx} ${yTop} L${cx-rx} ${yBot} A${rx} ${ry} 0 0 0 ${cx+rx} ${yBot} L${cx+rx} ${yTop} Z`,fill:vol}));
+  g.appendChild(el('ellipse',{cx,cy:yTop,rx,ry,fill:tapa||relleno}));
+  g.appendChild(el('ellipse',{cx,cy:yTop,rx,ry,fill:'none',stroke:'#FFFFFF','stroke-opacity':.55,'stroke-width':.8}));
+  svg.appendChild(g);
+  return `M${cx-rx} ${yTop} L${cx-rx} ${yBot} A${rx} ${ry} 0 0 0 ${cx+rx} ${yBot} L${cx+rx} ${yTop} A${rx} ${ry} 0 0 0 ${cx-rx} ${yTop} Z`;
+}
+function desenfoque(svg,sd){
+  const id='bl'+(uid++);
+  const f=el('filter',{id,x:'-50%',y:'-50%',width:'200%',height:'200%'});
+  f.appendChild(el('feGaussianBlur',{stdDeviation:sd}));
+  svg.querySelector('defs').appendChild(f); return `url(#${id})`;
+}
+function recorte(svg,d){
+  const id='cp'+(uid++);
+  const cp=el('clipPath',{id}); cp.appendChild(el('path',{d}));
+  svg.querySelector('defs').appendChild(cp);
+  const g=el('g',{'clip-path':`url(#${id})`}); svg.appendChild(g); return g;
+}
+function bandeja(svg,cx,y,rx){
+  svg.appendChild(el('ellipse',{cx,cy:y+16,rx:rx*1.16,ry:rx*.15,fill:'#8A7688',opacity:.10}));
+  svg.appendChild(el('ellipse',{cx,cy:y,rx,ry:rx*.135,fill:lg(svg,'b'+(uid++),[[0,'#FFFFFF'],[1,'#F0E6D6']])}));
+  svg.appendChild(el('ellipse',{cx,cy:y,rx,ry:rx*.135,fill:'none',stroke:C.oro,'stroke-opacity':.55,'stroke-width':1}));
+  svg.appendChild(el('ellipse',{cx,cy:y-3,rx:rx*.9,ry:rx*.118,fill:'none',stroke:C.oro,'stroke-opacity':.22,'stroke-width':.7}));
+}
+function estrella(svg,x,y,s,op=.8,color=C.oro){
+  svg.appendChild(el('path',{d:`M${x} ${y-s} Q${x+s*.17} ${y-s*.17} ${x+s} ${y} Q${x+s*.17} ${y+s*.17} ${x} ${y+s}
+    Q${x-s*.17} ${y+s*.17} ${x-s} ${y} Q${x-s*.17} ${y-s*.17} ${x} ${y-s} Z`,fill:color,opacity:op}));
+}
+function chispas(svg,zona,n,rango=[1.6,4.6]){
+  for(let i=0;i<n;i++){
+    const x=zona[0]+rnd()*(zona[2]-zona[0]), y=zona[1]+rnd()*(zona[3]-zona[1]);
+    if(rnd()<.45) estrella(svg,x,y,rango[0]+rnd()*(rango[1]-rango[0]),.30+rnd()*.5);
+    else svg.appendChild(el('circle',{cx:x,cy:y,r:.7+rnd()*1.5,fill:C.oro,opacity:.25+rnd()*.45}));
+  }
+}
+function globito(svg,cx,cy,r,par,rot=0){
+  const id='gl'+(uid++);
+  const f=rg(svg,id,[[0,'#FFFFFF'],['24%',par[0]],['80%',par[1]],[1,par[1]]]);
+  const g=el('g',{transform:`rotate(${rot} ${cx} ${cy})`}), ry=r*1.14;
+  g.appendChild(el('path',{d:`M${cx-r*.11} ${cy+ry-1} L${cx+r*.11} ${cy+ry-1} L${cx} ${cy+ry+r*.17} Z`,fill:par[1],opacity:.9}));
+  g.appendChild(el('ellipse',{cx,cy,rx:r,ry,fill:f}));
+  g.appendChild(el('ellipse',{cx:cx-r*.33,cy:cy-ry*.33,rx:r*.19,ry:ry*.26,fill:'#fff',opacity:.62,
+    transform:`rotate(-24 ${cx-r*.33} ${cy-ry*.33})`}));
+  svg.appendChild(g);
+}
+function merengue(svg,x,y,w,h,col){
+  const g=el('g');
+  const id='mg'+(uid++);
+  const f=lg(svg,id,[[0,'#FFFFFF'],['30%',col[0]],[1,col[1]]]);
+  g.appendChild(el('path',{d:`M${x-w} ${y}
+    C${x-w} ${y-h*.44} ${x-w*.74} ${y-h*.70} ${x-w*.36} ${y-h*.85}
+    C${x-w*.14} ${y-h*.93} ${x-w*.07} ${y-h*.97} ${x} ${y-h}
+    C${x+w*.07} ${y-h*.97} ${x+w*.14} ${y-h*.93} ${x+w*.36} ${y-h*.85}
+    C${x+w*.74} ${y-h*.70} ${x+w} ${y-h*.44} ${x+w} ${y} Z`,fill:f}));
+  // vueltas de la manga pastelera
+  [[.62,.46],[.34,.74]].forEach(([hf,wf])=>{
+    g.appendChild(el('path',{d:`M${x-w*wf} ${y-h*hf} Q${x} ${y-h*hf-h*.16} ${x+w*wf} ${y-h*hf}`,
+      fill:'none',stroke:col[1],'stroke-opacity':.34,'stroke-width':.9}));
+  });
+  g.appendChild(el('ellipse',{cx:x-w*.42,cy:y-h*.42,rx:w*.16,ry:h*.20,fill:'#fff',opacity:.5,
+    transform:`rotate(-18 ${x-w*.42} ${y-h*.42})`}));
+  svg.appendChild(g);
+}
+function macaron(svg,x,y,r,col){
+  const g=el('g');
+  g.appendChild(el('ellipse',{cx:x,cy:y-r*.42,rx:r,ry:r*.46,fill:col[0]}));
+  g.appendChild(el('rect',{x:x-r*.94,y:y-r*.20,width:r*1.88,height:r*.30,fill:'#FFF7EF',opacity:.95}));
+  g.appendChild(el('ellipse',{cx:x,cy:y+r*.24,rx:r,ry:r*.46,fill:col[1]}));
+  svg.appendChild(g);
+}
+
+/* ---------- 01 · NUBE IRIDISCENTE ---------- */
+function tarta1(){
+  const s=nuevoSvg(), cx=220;
+  bandeja(s,cx,300,132);
+  const inf=lg(s,'t1a',[[0,C.melocoton],['30%',C.rosa],['62%',C.lila],['86%','#CDE8F0'],[1,C.menta]]);
+  const dInf=piso(s,cx,196,296,224,inf,lg(s,'t1at',[[0,'#FFE9D6'],[1,'#FFDCC4']]));
+  // pulverizado nacarado, difuminado y contenido en la silueta
+  const nacar=recorte(s,dInf);
+  nacar.appendChild(el('ellipse',{cx:cx-54,cy:246,rx:56,ry:38,fill:'#FFFFFF',opacity:.30,filter:desenfoque(s,11)}));
+  nacar.appendChild(el('ellipse',{cx:cx+62,cy:274,rx:48,ry:30,fill:'#FFFFFF',opacity:.20,filter:desenfoque(s,12)}));
+  const sup=lg(s,'t1b',[[0,'#FFFFFF'],['58%','#FFF8F4'],[1,'#F7EDF2']]);
+  piso(s,cx,96,196,150,sup,'#FFFDFB');
+  // motas de oro
+  for(let i=0;i<120;i++){
+    const x=cx-112+rnd()*224, y=200+rnd()*94;
+    if(Math.abs(x-cx)>108*Math.sqrt(1-Math.pow((y-248)/70,2)||0)) continue;
+    s.appendChild(el('circle',{cx:x,cy:y,r:.55+rnd()*1.15,fill:C.oro,opacity:.30+rnd()*.45}));
+  }
+  for(let i=0;i<70;i++){
+    const x=cx-72+rnd()*144, y=100+rnd()*92;
+    s.appendChild(el('circle',{cx:x,cy:y,r:.5+rnd()*1,fill:C.oro,opacity:.28+rnd()*.4}));
+  }
+  // perlas en la base de cada piso
+  for(let i=0;i<=26;i++){const t=i/26,x=cx-112+t*224,y=294+Math.sin(Math.PI*t)*7.6;
+    s.appendChild(el('circle',{cx:x,cy:y,r:3.1,fill:'#FFFFFF',opacity:.9}));
+    s.appendChild(el('circle',{cx:x-.8,cy:y-.9,r:1.1,fill:'#fff'}));}
+  for(let i=0;i<=18;i++){const t=i/18,x=cx-75+t*150,y=194+Math.sin(Math.PI*t)*5.2;
+    s.appendChild(el('circle',{cx:x,cy:y,r:2.6,fill:'#FFF6EA',opacity:.95}));}
+  // topper "1"
+  s.appendChild(el('rect',{x:cx-1,y:60,width:2,height:38,fill:C.oro,opacity:.5}));
+  const t=el('text',{x:cx,y:62,'text-anchor':'middle','font-family':'Gloock','font-size':'62',fill:'url(#oro1)'});
+  const og=el('linearGradient',{id:'oro1',x1:'0',y1:'0',x2:'0',y2:'1'});
+  [[0,'#EBD09A'],['45%','#C79A3E'],['75%','#9E7328'],[1,'#E7CC93']].forEach(([o,c])=>og.appendChild(el('stop',{offset:o,'stop-color':c})));
+  s.querySelector('defs').appendChild(og);
+  t.textContent='1'; s.appendChild(t);
+  chispas(s,[24,34,416,290],26);
+  return s;
+}
+
+/* ---------- 02 · PÉTALOS DE NUBE ---------- */
+function tarta2(){
+  const s=nuevoSvg(), cx=220;
+  bandeja(s,cx,300,132);
+  const dInf=piso(s,cx,196,296,224,lg(s,'t2a',[[0,'#FFF9F2'],[1,'#FCEFE4']]),'#FFF6EC');
+  // pétalos a espátula, por hiladas, recortados a la silueta del piso
+  const filas=[['#FFE9D6','#FBD3B0'],['#FDDCE8','#F6B9CE'],['#EDE2FA','#D2BEEE'],['#DCEFF9','#B7DAEC'],['#D9F3E7','#AEE0C9']];
+  const capa=recorte(s,dInf);
+  filas.forEach((col,fila)=>{
+    const y=214+fila*20, w=30, h=23;
+    const pf=lg(s,'p'+(uid++),[[0,'#FFFFFF',.92],['38%',col[0]],[1,col[1]]]);
+    for(let i=-1;i<10;i++){
+      const x=cx-112+(i+(fila%2?.5:0))*24;
+      capa.appendChild(el('path',{d:`M${x-w/2} ${y} A${w/2} ${h} 0 0 1 ${x+w/2} ${y} Z`,fill:pf}));
+      capa.appendChild(el('path',{d:`M${x-w/2} ${y} A${w/2} ${h} 0 0 1 ${x+w/2} ${y}`,
+        fill:'none',stroke:'#FFFFFF','stroke-opacity':.6,'stroke-width':.8}));
+    }
+  });
+  // sombra del piso superior sobre el inferior
+  capa.appendChild(el('ellipse',{cx,cy:198,rx:78,ry:12,fill:'#8A7688',opacity:.10}));
+  piso(s,cx,96,196,150,lg(s,'t2b',[[0,'#FDEAF0'],['60%','#FBDCE7'],[1,'#F6CCDC']]),'#FDEEF3');
+  // corona sobre la cara superior (de atrás hacia delante)
+  [[cx-44,92,11,26,0],[cx+42,92,11,25,1],[cx-18,95,12,30,2],[cx+16,95,12,28,3],[cx-1,100,13,33,4]]
+    .forEach(([x,y,w,h,i])=>merengue(s,x,y,w,h,filas[i]));
+  macaron(s,cx-58,100,12,['#FDDCE8','#F3B9D0']);
+  macaron(s,cx+56,100,12,['#DCEFF9','#B7DAEC']);
+  // piezas apoyadas en la repisa del piso inferior
+  macaron(s,cx-95,198,13,['#D9F3E7','#B6E5CE']);
+  merengue(s,cx-77,199,10,22,filas[1]);
+  merengue(s,cx+78,199,10,21,filas[0]);
+  macaron(s,cx+96,198,13,['#FDF0C9','#F7E3A6']);
+  // piezas sobre la bandeja
+  macaron(s,cx-122,298,12,['#EDE2FA','#D2BEEE']);
+  merengue(s,cx-105,300,9,19,filas[3]);
+  merengue(s,cx+107,300,9,18,filas[4]);
+  macaron(s,cx+124,298,12,['#FFE9D6','#FBD1AC']);
+  // pan de oro sobre los pétalos
+  for(let i=0;i<14;i++){
+    const x=cx-92+rnd()*184,y=220+rnd()*68;
+    s.appendChild(el('path',{d:`M${x} ${y} l${1.6+rnd()*3} ${-1-rnd()*2.2} l${1+rnd()*2.4} ${1.6+rnd()*2.4} l${-2.4-rnd()*2.4} ${1+rnd()*1.6} Z`,
+      fill:C.oro,opacity:.34+rnd()*.28}));
+  }
+  chispas(s,[26,40,414,286],16);
+  return s;
+}
+
+/* ---------- 03 · GLOBOS DE AZÚCAR ---------- */
+function tarta3(){
+  const s=nuevoSvg(), cx=220;
+  bandeja(s,cx,300,132);
+  piso(s,cx,196,296,224,lg(s,'t3a',[[0,'#FFFDFA'],['55%','#FDF8F3'],[1,'#F6EFEA']]),'#FFFCF8');
+  piso(s,cx,96,196,150,lg(s,'t3b',[[0,'#FFFDFA'],['55%','#FCF7F4'],[1,'#F4EDEA']]),'#FFFCF8');
+  // hilos dorados pintados sobre el piso superior
+  const nudo=[cx+2,104];
+  const anclas=[[cx-46,58],[cx-24,44],[cx+2,38],[cx+28,44],[cx+50,58],[cx-8,60],[cx+18,62]];
+  anclas.forEach(a=>{
+    s.appendChild(el('path',{d:`M${nudo[0]} ${nudo[1]} Q${(a[0]+nudo[0])/2+(rnd()-.5)*12} ${(a[1]+nudo[1])/2} ${a[0]} ${a[1]}`,
+      fill:'none',stroke:C.oro,'stroke-opacity':.55,'stroke-width':1}));
+  });
+  // racimo de globos de fondant
+  const par=[['#FCD7E4','#F3AFC9'],['#E7DAF7','#CDB4EC'],['#D6ECF7','#AFD4EA'],['#D3F0E2','#A9DDC6'],['#FDF0C9','#F5DE94'],['#FFE3CA','#F9CBA4'],['#FFFFFF','#EFE4E9']];
+  const pos=[[cx-46,52,17],[cx-22,37,15],[cx+3,30,18],[cx+29,37,15],[cx+51,52,16],[cx-9,55,12],[cx+19,57,12]];
+  pos.forEach((p,i)=>globito(s,p[0],p[1],p[2],par[i%par.length],(rnd()-.5)*16));
+  // lettering dorado en el piso inferior
+  const og=el('linearGradient',{id:'oro3',x1:'0',y1:'0',x2:'0',y2:'1'});
+  [[0,'#EBD09A'],['48%','#C79A3E'],[1,'#9E7328']].forEach(([o,c])=>og.appendChild(el('stop',{offset:o,'stop-color':c})));
+  s.querySelector('defs').appendChild(og);
+  const nm=el('text',{x:cx,y:256,'text-anchor':'middle','font-family':'Nothing','font-size':'40',fill:'url(#oro3)'});
+  nm.textContent='Mariana'; s.appendChild(nm);
+  estrella(s,cx-84,236,5,.7); estrella(s,cx+86,268,4.4,.65); estrella(s,cx+74,222,3.4,.55);
+  estrella(s,cx-72,278,3.6,.6);
+  // perlitas en la base
+  for(let i=0;i<=26;i++){const t=i/26,x=cx-112+t*224,y=294+Math.sin(Math.PI*t)*7.6;
+    s.appendChild(el('circle',{cx:x,cy:y,r:3,fill:'#FFF9F2',opacity:.95}));}
+  chispas(s,[26,26,414,290],22);
+  return s;
+}
+
+/* ---------- 04 · ARCOÍRIS SUAVE ---------- */
+function tarta4(){
+  const s=nuevoSvg(), cx=220;
+  bandeja(s,cx,300,132);
+  const dInf4=piso(s,cx,196,296,224,lg(s,'t4a',[[0,'#FFFFFF'],['42%','#FDF6FA'],['74%','#F5E9F4'],[1,'#E9DFF3']]),'#FFFDFC');
+  // aerografiado inferior, difuminado y contenido en la silueta
+  const aire=recorte(s,dInf4);
+  aire.appendChild(el('ellipse',{cx:cx-74,cy:296,rx:66,ry:26,fill:C.rosa,opacity:.42,filter:desenfoque(s,13)}));
+  aire.appendChild(el('ellipse',{cx:cx+70,cy:298,rx:62,ry:24,fill:C.menta,opacity:.38,filter:desenfoque(s,13)}));
+  aire.appendChild(el('ellipse',{cx:cx,cy:300,rx:56,ry:22,fill:C.lila,opacity:.26,filter:desenfoque(s,14)}));
+  const dSup=piso(s,cx,96,196,150,lg(s,'t4b',[[0,'#FFFFFF'],[1,'#FDFAFB']]),'#FFFFFF');
+
+  // drip pastel: banda y gotas comparten el mismo degradado horizontal
+  const gd=el('linearGradient',{id:'t4drip',gradientUnits:'userSpaceOnUse',x1:cx-75,y1:0,x2:cx+75,y2:0});
+  [[0,'#E4D3F5'],['28%','#F7CDDF'],['56%','#CFE8F5'],[1,'#C4EBD8']]
+    .forEach(([o,c])=>gd.appendChild(el('stop',{offset:o,'stop-color':c})));
+  s.querySelector('defs').appendChild(gd);
+  const capa4=recorte(s,dSup);
+  capa4.appendChild(el('rect',{x:cx-75,y:94,width:150,height:15,fill:'url(#t4drip)'}));
+  for(let i=0;i<13;i++){
+    const x=cx-69+i*11.6, an=4.6+rnd()*1.6, largo=10+rnd()*26;
+    capa4.appendChild(el('rect',{x:x-an,y:100,width:an*2,height:largo,rx:an,fill:'url(#t4drip)'}));
+    capa4.appendChild(el('circle',{cx:x,cy:100+largo,r:an,fill:'url(#t4drip)'}));
+    capa4.appendChild(el('ellipse',{cx:x-an*.42,cy:100+largo*.55,rx:an*.30,ry:largo*.22,fill:'#fff',opacity:.35}));
+  }
+  s.appendChild(el('ellipse',{cx,cy:96,rx:75,ry:150*.062,fill:'#FFFFFF'}));
+  s.appendChild(el('ellipse',{cx,cy:96,rx:75,ry:150*.062,fill:'none',stroke:'#E9DDE6','stroke-width':.7}));
+
+  // arcoíris de fondant apoyado en dos nubes
+  const baseY=88;
+  [['#F9C6D9',40],['#FFD9B8',31],['#FBE7B0',22],['#BEEBD6',13]].forEach(([c,r])=>{
+    s.appendChild(el('path',{d:`M${cx-r} ${baseY} A${r} ${r} 0 0 1 ${cx+r} ${baseY}`,
+      fill:'none',stroke:c,'stroke-width':8.4,'stroke-linecap':'round'}));
+  });
+  [[cx-30,baseY],[cx+30,baseY]].forEach(([x,y])=>{
+    [[0,0,13],[-11,3,9],[11,3,9],[-4,-7,9],[6,-6,8]].forEach(([dx,dy,r])=>
+      s.appendChild(el('circle',{cx:x+dx,cy:y+dy,r,fill:'#FFFFFF'})));
+    s.appendChild(el('ellipse',{cx:x,cy:y+8,rx:20,ry:6,fill:'#FFFFFF'}));
+  });
+  estrella(s,cx-76,44,6,.75); estrella(s,cx+78,48,5,.7); estrella(s,cx+58,22,3.8,.6); estrella(s,cx-56,20,4.2,.6);
+  // perlitas base
+  for(let i=0;i<=26;i++){const t=i/26,x=cx-112+t*224,y=294+Math.sin(Math.PI*t)*7.6;
+    s.appendChild(el('circle',{cx:x,cy:y,r:3,fill:'#FFFFFF',opacity:.9}));}
+  chispas(s,[26,26,414,290],20);
+  return s;
+}
+
+/* ---------- fichas ---------- */
+const DISENOS=[
+  {n:'01',dibujo:tarta1,nombre:'Nube iridiscente',lema:'degradado pastel · pan de oro',
+   muestras:[C.melocoton,C.rosa,C.lila,C.agua,C.menta,'#FFFDFB'],
+   specs:[
+    ['Medidas','Piso inferior Ø 20 cm · piso superior Ø 15 cm · altura total ≈ 20 cm'],
+    ['Cobertura','Buttercream de merengue suizo, acabado liso alisado a espátula'],
+    ['Color','Degradado vertical melocotón → rosa → lila → agua → menta en el piso inferior; piso superior blanco perla'],
+    ['Detalles','Pulverizado nacarado comestible, motas de pan de oro y perlitas en la base de cada piso'],
+    ['Topper','Número «1» dorado'],
+    ['Raciones','25 – 30 · <em>bizcocho de vainilla con relleno de frutos rojos</em>'],
+   ]},
+  {n:'02',dibujo:tarta2,nombre:'Pétalos de nube',lema:'espátula · merengues · macarons',
+   muestras:['#FFF6EC',C.melocoton,C.mantequilla,C.rosa,C.lila,C.menta],
+   specs:[
+    ['Medidas','Ø 20 cm y Ø 15 cm · altura total ≈ 20 cm'],
+    ['Cobertura','Piso inferior con técnica de pétalos a espátula (palette knife) en toda la paleta pastel; piso superior liso en rosa empolvado'],
+    ['Detalles','Cascada lateral de merenguitos y macarons pastel, con láminas de pan de oro repartidas'],
+    ['Topper','Vela dorada nº 1 o cartel «Mariana» en acrílico dorado'],
+    ['Raciones','25 – 30 · <em>vainilla con crema de queso y melocotón</em>'],
+   ]},
+  {n:'03',dibujo:tarta3,nombre:'Globos de azúcar',lema:'marfil mate · fondant · lettering',
+   muestras:['#FFFCF8',C.rosa,C.lila,C.agua,C.menta,C.oro],
+   specs:[
+    ['Medidas','Ø 20 cm y Ø 15 cm · altura total ≈ 20 cm'],
+    ['Cobertura','Los dos pisos en blanco marfil liso, acabado mate'],
+    ['Detalles','Racimo de globos de fondant en pastel sobre el piso superior, con los hilos pintados a mano en oro comestible'],
+    ['Lettering','«Mariana» en oro sobre el piso inferior + estrellas doradas sueltas'],
+    ['Raciones','25 – 30 · <em>bizcocho de vainilla y relleno de nata y fresa</em>'],
+   ]},
+  {n:'04',dibujo:tarta4,nombre:'Arcoíris suave',lema:'drip pastel · arcoíris de fondant',
+   muestras:[C.rosa,C.melocoton,C.mantequilla,C.menta,C.agua,'#FFFFFF'],
+   specs:[
+    ['Medidas','Ø 20 cm y Ø 15 cm · altura total ≈ 20 cm'],
+    ['Cobertura','Blanco liso; piso inferior aerografiado en degradado pastel muy suave hacia la base'],
+    ['Detalles','Drip de chocolate blanco teñido en lila, rosa, agua y menta cayendo del piso superior'],
+    ['Topper','Arcoíris de fondant con nubes y estrellas doradas'],
+    ['Raciones','25 – 30 · <em>bizcocho de vainilla con relleno de chocolate blanco</em>'],
+   ]},
+];
+
+const rejilla=document.getElementById('rejilla');
+DISENOS.forEach((d,i)=>{
+  const a=document.createElement('article');
+  a.className='carta'; a.id='c'+(i+1);
+  const esc=document.createElement('div'); esc.className='escena'; esc.appendChild(d.dibujo());
+  a.appendChild(esc);
+  const num=document.createElement('div'); num.className='num'; num.textContent=d.n; a.appendChild(num);
+  const h=document.createElement('h2'); h.textContent=d.nombre; a.appendChild(h);
+  const l=document.createElement('div'); l.className='lema'; l.textContent=d.lema; a.appendChild(l);
+  const m=document.createElement('div'); m.className='muestras';
+  d.muestras.forEach(c=>{const b=document.createElement('b');b.style.background=c;m.appendChild(b)});
+  a.appendChild(m);
+  const dl=document.createElement('dl');
+  d.specs.forEach(([k,v])=>{const dt=document.createElement('dt');dt.textContent=k;
+    const dd=document.createElement('dd');dd.innerHTML=v;dl.appendChild(dt);dl.appendChild(dd)});
+  a.appendChild(dl);
+  rejilla.appendChild(a);
+});
+
+const PAL=[['Melocotón','#FFD9B8'],['Mantequilla','#FBE7B0'],['Rosa','#F9C6D9'],['Lila','#DCC8F0'],['Agua','#C6E4F2'],['Menta','#BEEBD6'],['Oro','#C79A3E']];
+const pal=document.getElementById('paleta');
+PAL.forEach(([n,c])=>{const s=document.createElement('span');
+  const u=document.createElement('u'); u.style.background=c;
+  s.appendChild(u); s.appendChild(document.createTextNode(n+' '+c)); pal.appendChild(s)});
+</script>
