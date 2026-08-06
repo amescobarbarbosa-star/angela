@@ -21,6 +21,11 @@ const FONTS = [
   fontFace('Outfit', 'Outfit-Regular.ttf', 400),
   fontFace('Outfit', 'Outfit-Bold.ttf', 700),
   fontFace('Gloock', 'Gloock-Regular.ttf'),
+  fontFace('Erica', 'EricaOne-Regular.ttf'),
+  fontFace('Smooch', 'SmoochSans-Medium.ttf', 500),
+  fontFace('Young', 'YoungSerif-Regular.ttf'),
+  fontFace('Bricolage', 'BricolageGrotesque-Bold.ttf', 700),
+  fontFace('Arsenal', 'ArsenalSC-Regular.ttf'),
 ].join('\n');
 
 (async () => {

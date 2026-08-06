@@ -26,6 +26,9 @@ salida/
   tarta-03-globos-de-azucar.*
   tarta-04-arcoiris-suave.*
 
+  tarta-3d.jpg/.png               ← render 3D de la tarta «Jirafa y palmeras» (frente)
+  tarta-3d-tres-cuartos.jpg/.png  ← el mismo render en vista de tres cuartos
+
 mensaje-whatsapp.md               ← textos para acompañar la invitación
 encargo-pasteleria.md             ← ficha técnica para la pastelería
 filosofia-diseno.md               ← criterio visual que guía todas las piezas
@@ -35,8 +38,23 @@ src/
   invitaciones-alt.html           ← fuente de las tres alternativas
   tartas.html                     ← fuente de las tartas iridiscentes
   tartas-fondant.html             ← fuente de las tartas de fondant
-  render.js                       ← exporta los HTML a PNG/JPG con Chromium
+  tarta3d.html                    ← escena 3D (three.js + WebGL)
+  three.module.js                 ← biblioteca three.js (r0.169)
+  render.js                       ← exporta los HTML 2D a PNG/JPG con Chromium
+  render3d.js                     ← exporta la escena 3D (WebGL vía SwiftShader)
 ```
+
+## Render 3D
+
+`src/tarta3d.html` monta la tarta con three.js (geometría real, luces de estudio,
+sombras). Se exporta con Chromium en modo WebGL por software:
+
+```bash
+node src/render3d.js src/tarta3d.html salida/tarta-3d.jpg 1200 1500
+node "src/render3d.js" "src/tarta3d.html?v=tresqcuartos" salida/tarta-3d-tres-cuartos.jpg 1200 1500
+```
+
+El parámetro `?v=tresqcuartos` cambia la cámara a vista de tres cuartos.
 
 ## Dos paletas
 

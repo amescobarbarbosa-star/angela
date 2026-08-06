@@ -1,0 +1,413 @@
+<meta charset="utf-8">
+<title>Tarta 3D — Mariana</title>
+<style>
+  html,body{margin:0;background:#F3ECE6;overflow:hidden}
+  #app{width:1200px;height:1500px}
+</style>
+<div id="app"></div>
+
+<script type="module">
+import * as THREE from './three.module.js';
+
+const W=1200, H=1500;
+const app=document.getElementById('app');
+
+const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
+renderer.setSize(W,H);
+renderer.setPixelRatio(2);
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.02;
+app.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene();
+
+// fondo de estudio: degradado vertical suave
+{
+  const c=document.createElement('canvas');c.width=16;c.height=256;
+  const g=c.getContext('2d').createLinearGradient(0,0,0,256);
+  g.addColorStop(0,'#FBF5F0');g.addColorStop(0.55,'#F1E8E1');g.addColorStop(1,'#E7DBD2');
+  const ctx=c.getContext('2d');ctx.fillStyle=g;ctx.fillRect(0,0,16,256);
+  const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;
+  scene.background=tex;
+}
+
+const VISTA=new URLSearchParams(location.search).get('v')||'frente';
+const camera=new THREE.PerspectiveCamera(30,W/H,0.1,100);
+if(VISTA==='tresqcuartos'){ camera.position.set(9.2,5.6,15.8); }
+else { camera.position.set(0,5.0,18.5); }
+camera.lookAt(0,3.4,0);
+
+// ---------- luces de estudio ----------
+scene.add(new THREE.HemisphereLight(0xffffff,0xE9DCD2,0.62));
+const key=new THREE.DirectionalLight(0xfff4ea,2.05);
+key.position.set(-5.5,9,6.5);
+key.castShadow=true;
+key.shadow.mapSize.set(2048,2048);
+key.shadow.camera.near=1;key.shadow.camera.far=30;
+key.shadow.camera.left=-8;key.shadow.camera.right=8;
+key.shadow.camera.top=10;key.shadow.camera.bottom=-4;
+key.shadow.bias=-0.0004;key.shadow.radius=14;
+scene.add(key);
+// relleno frontal amplio: levanta la cara y disuelve los bordes de sombra del topper
+const fill=new THREE.DirectionalLight(0xf6ecff,0.72); fill.position.set(6,4.5,8); scene.add(fill);
+const fill2=new THREE.DirectionalLight(0xffffff,0.34); fill2.position.set(0,3,9); scene.add(fill2);
+const rim=new THREE.DirectionalLight(0xffffff,0.85); rim.position.set(3,6,-7); scene.add(rim);
+
+// ---------- materiales ----------
+const M=(hex,r=0.62,m=0)=>new THREE.MeshStandardMaterial({color:new THREE.Color(hex),roughness:r,metalness:m});
+const COL={
+  rosa:'#F0C4CB', rosaS:'#E1A6B2', rosaL:'#FBE2E7',
+  crema:'#FAF2E6', cremaTapa:'#FFFBF3',
+  salvia:'#BFD0A6', salviaS:'#A4B98C',
+  gris:'#CBC8C7', grisS:'#AEA9A8',
+  tan:'#F0C57C', tanS:'#DBA24C', marron:'#A9772F', hocico:'#FBEFDD',
+  oso:'#E7C79C', osoS:'#CFA672',
+  blanco:'#FFFFFF', hoja:'#B7CCA0',
+};
+const oroMat=new THREE.MeshStandardMaterial({color:new THREE.Color('#C79A3E'),roughness:0.28,metalness:0.95});
+const oroClaro=new THREE.MeshStandardMaterial({color:new THREE.Color('#E7C888'),roughness:0.42,metalness:0.55});
+const fondantR=M(COL.rosa,0.66); const fondantC=M(COL.crema,0.66);
+
+// ---------- base / plato ----------
+const plato=new THREE.Mesh(new THREE.CylinderGeometry(5.2,5.4,0.34,80),M('#F6EEE7',0.5));
+plato.position.y=0.17; plato.receiveShadow=true; scene.add(plato);
+const platoBorde=new THREE.Mesh(new THREE.TorusGeometry(5.2,0.09,20,90),M(COL.rosaS,0.5));
+platoBorde.rotation.x=Math.PI/2; platoBorde.position.y=0.34; scene.add(platoBorde);
+
+// suelo receptor de sombra
+const suelo=new THREE.Mesh(new THREE.CircleGeometry(24,64),new THREE.ShadowMaterial({opacity:0.22}));
+suelo.rotation.x=-Math.PI/2; suelo.position.y=0.001; suelo.receiveShadow=true; scene.add(suelo);
+
+// ---------- pisos de la tarta ----------
+function tarta(y,rBot,rTop,h,mat){
+  const g=new THREE.CylinderGeometry(rTop,rBot,h,120,1,false);
+  const cuerpo=new THREE.Mesh(g,mat);
+  cuerpo.position.y=y+h/2; cuerpo.rotation.y=Math.PI*0.5;   // costura al lateral, fuera de vista
+  cuerpo.castShadow=true; cuerpo.receiveShadow=true; scene.add(cuerpo);
+  // tapa ligeramente más clara
+  const tapa=new THREE.Mesh(new THREE.CircleGeometry(rTop,96),M(COL.cremaTapa,0.7));
+  tapa.rotation.x=-Math.PI/2; tapa.position.y=y+h+0.001; scene.add(tapa);
+  return cuerpo;
+}
+const yBase=0.34;
+const pisoInf=tarta(yBase,3.35,3.28,2.5,fondantR);
+const pisoSup=tarta(yBase+2.5,2.35,2.30,2.35,fondantC);
+
+// perlas en la base de cada piso
+function perlas(radio,y,n,r=0.11,mat=M(COL.blanco,0.4)){
+  const geo=new THREE.SphereGeometry(r,18,18);
+  for(let i=0;i<n;i++){const a=i/n*Math.PI*2;
+    const m=new THREE.Mesh(geo,mat);
+    m.position.set(Math.cos(a)*radio,y,Math.sin(a)*radio);
+    m.castShadow=true; scene.add(m);}
+}
+perlas(3.30,yBase+0.12,64);
+perlas(2.30,yBase+2.5+0.12,52,0.10);
+
+// banda + lazo de oro en la unión
+const banda=new THREE.Mesh(new THREE.CylinderGeometry(2.33,2.33,0.2,96),oroMat);
+banda.position.y=yBase+2.5+0.1; scene.add(banda);
+
+// ---------- helpers de decoración ----------
+function esfera(x,y,z,r,mat){
+  const m=new THREE.Mesh(new THREE.SphereGeometry(r,28,28),mat);
+  m.position.set(x,y,z); m.castShadow=true; scene.add(m); return m;
+}
+const ESFMAT={
+  rosa:M(COL.rosa,0.5), crema:M(COL.crema,0.5), salvia:M(COL.salvia,0.5),
+  oro:oroClaro, blanco:M(COL.blanco,0.4),
+};
+// racimo de bolas pegado al frente, subiendo por la unión de los pisos
+function racimo(cx,cz,baseAng){
+  const pack=[
+    [0,2.95,0.42,'rosa'],[0.5,3.3,0.34,'crema'],[-0.42,3.35,0.3,'salvia'],
+    [0.32,3.72,0.28,'oro'],[-0.3,3.78,0.24,'crema'],[0.08,4.05,0.26,'rosa'],
+    [-0.5,4.08,0.2,'blanco'],[0.55,4.0,0.22,'salvia'],
+  ];
+  const dirx=Math.cos(baseAng), dirz=Math.sin(baseAng);
+  pack.forEach(([off,y,r,k])=>{
+    esfera(cx+dirx*3.0 - dirz*off, yBase+y, cz+dirz*3.0 + dirx*off, r, ESFMAT[k]);
+  });
+}
+
+// hojas de fondant
+function hoja(x,y,z,esc,rot,mat){
+  const shape=new THREE.Shape();
+  shape.moveTo(0,0);
+  shape.bezierCurveTo(0.5,0.3,0.5,1.1,0,1.5);
+  shape.bezierCurveTo(-0.5,1.1,-0.5,0.3,0,0);
+  const geo=new THREE.ExtrudeGeometry(shape,{depth:0.08,bevelEnabled:true,bevelThickness:0.03,bevelSize:0.04,bevelSegments:2});
+  geo.center();
+  const m=new THREE.Mesh(geo,mat);
+  m.scale.setScalar(esc); m.position.set(x,y,z); m.rotation.set(rot.x||0,rot.y||0,rot.z||0);
+  m.castShadow=true; scene.add(m); return m;
+}
+// flor de 5 pétalos
+function flor(x,y,z,esc,rot,col){
+  const g=new THREE.Group();
+  const petalo=new THREE.SphereGeometry(0.28,16,16); petalo.scale(1,0.4,0.7);
+  for(let i=0;i<5;i++){
+    const p=new THREE.Mesh(petalo,M(col,0.5));
+    const a=i/5*Math.PI*2;
+    p.position.set(Math.cos(a)*0.26,0,Math.sin(a)*0.26);
+    g.add(p);
+  }
+  const centro=new THREE.Mesh(new THREE.SphereGeometry(0.13,16,16),oroClaro);
+  g.add(centro);
+  g.scale.setScalar(esc); g.position.set(x,y,z); g.rotation.set(rot.x||0,rot.y||0,rot.z||0);
+  g.traverse(o=>o.castShadow=true); scene.add(g); return g;
+}
+
+// palmera en relieve, pegada a la superficie del piso inferior
+function palmera(ang){
+  const R=3.30, dx=Math.cos(ang), dz=Math.sin(ang);
+  const g=new THREE.Group();
+  // tronco curvo, pegado a la tarta (en el plano XY local, luego lo orientamos)
+  const pts=[new THREE.Vector3(0,0,0),new THREE.Vector3(0.05,0.7,0),
+    new THREE.Vector3(0.12,1.3,0),new THREE.Vector3(0.28,1.75,0)];
+  const tronco=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),24,0.1,10),M('#D9B27B',0.6));
+  g.add(tronco);
+  // copa: 6 frondas planas abriéndose desde arriba, hacia abajo
+  const top=new THREE.Vector3(0.28,1.75,0);
+  const angs=[-0.9,-0.5,-0.15,0.2,0.6,1.0];
+  angs.forEach(fa=>{
+    const h=hojaMesh(0.62,M(fa%2?COL.salvia:COL.salviaS,0.55));
+    h.position.copy(top);
+    h.rotation.z=Math.PI+fa;      // apuntan hacia fuera/abajo desde la corona
+    g.add(h);
+  });
+  // orientar el grupo tangente a la superficie curva del piso
+  g.position.set(dx*R,yBase+0.02,dz*R);
+  g.rotation.y=-ang+Math.PI/2;    // el plano local queda tangente al cilindro
+  g.traverse(o=>{if(o.isMesh){o.castShadow=true;}});
+  scene.add(g);
+}
+// devuelve una hoja como mesh (para agrupar)
+function hojaMesh(esc,mat){
+  const shape=new THREE.Shape();
+  shape.moveTo(0,0);
+  shape.bezierCurveTo(0.5,0.3,0.5,1.1,0,1.5);
+  shape.bezierCurveTo(-0.5,1.1,-0.5,0.3,0,0);
+  const geo=new THREE.ExtrudeGeometry(shape,{depth:0.06,bevelEnabled:true,bevelThickness:0.02,bevelSize:0.03,bevelSegments:2});
+  const m=new THREE.Mesh(geo,mat); m.scale.setScalar(esc); return m;
+}
+
+// ---------- placa con el nombre ----------
+function placa(ang){
+  const dx=Math.cos(ang), dz=Math.sin(ang);
+  const cy=yBase+2.5+1.15;
+  // disco frontal con CircleGeometry (sin costura de cilindro) + reborde de grosor
+  const grosor=new THREE.Mesh(new THREE.CircleGeometry(1.05,72),M(COL.cremaTapa,0.6));
+  grosor.position.set(dx*2.30,cy,dz*2.30); grosor.rotation.y=Math.PI/2-ang;
+  grosor.castShadow=true; scene.add(grosor);
+  const disco=new THREE.Mesh(new THREE.CircleGeometry(1.02,72),M(COL.cremaTapa,0.62));
+  disco.position.set(dx*2.335,cy,dz*2.335); disco.rotation.y=Math.PI/2-ang; scene.add(disco);
+  // festón de bolitas rosa
+  for(let i=0;i<30;i++){
+    const a=i/30*Math.PI*2;
+    const lx=Math.cos(a)*1.05, ly=Math.sin(a)*1.05;
+    const b=new THREE.Mesh(new THREE.SphereGeometry(0.07,12,12),M(COL.rosa,0.5));
+    b.position.set(dx*2.34 - dz*lx, yBase+2.5+1.15+ly, dz*2.34 + dx*lx);
+    scene.add(b);
+  }
+  // texto "Mariana" con canvas → textura dorada en relieve
+  const c=document.createElement('canvas');c.width=512;c.height=256;
+  const g=c.getContext('2d');
+  g.clearRect(0,0,512,256);
+  g.fillStyle='#C79A3E';g.font='italic 120px "Nothing", cursive';
+  g.textAlign='center';g.textBaseline='middle';
+  g.fillText('Mariana',256,138);
+  const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=8;
+  const plano=new THREE.Mesh(new THREE.PlaneGeometry(1.7,0.85),
+    new THREE.MeshStandardMaterial({map:tex,transparent:true,roughness:0.3,metalness:0.6,
+      emissive:new THREE.Color('#7A5B1E'),emissiveMap:tex,emissiveIntensity:0.25}));
+  plano.position.set(dx*2.365,yBase+2.5+1.16,dz*2.365); plano.rotation.y=-ang+Math.PI/2*0;
+  plano.rotation.y=Math.PI/2-ang; scene.add(plano);
+  // corazoncito rosa bajo la placa, pegado a la superficie
+  const cor=new THREE.Mesh(new THREE.SphereGeometry(0.12,16,16),M(COL.rosaS,0.5));
+  cor.scale.set(1.3,1.1,0.5); cor.position.set(dx*2.33,yBase+2.5+0.42,dz*2.33); scene.add(cor);
+}
+
+// ---------- número 1 en relieve ----------
+function numeroUno(x,y,z){
+  const g=new THREE.Group();
+  // dígito "1": asta vertical + banderín superior + base
+  const s=new THREE.Shape();
+  s.moveTo(-0.34,0.30);      // arranque del banderín
+  s.lineTo(0.06,0.78);       // punta superior
+  s.lineTo(0.24,0.78);
+  s.lineTo(0.24,-0.62);      // baja por la derecha del asta
+  s.lineTo(0.46,-0.62);      // base derecha
+  s.lineTo(0.46,-0.82);
+  s.lineTo(-0.40,-0.82);     // base izquierda
+  s.lineTo(-0.40,-0.62);
+  s.lineTo(-0.06,-0.62);
+  s.lineTo(-0.06,0.34);      // sube el frente del asta
+  s.lineTo(-0.22,0.16);      // muesca del banderín
+  s.closePath();
+  const geo=new THREE.ExtrudeGeometry(s,{depth:0.34,bevelEnabled:true,
+    bevelThickness:0.05,bevelSize:0.05,bevelSegments:4});
+  geo.center();
+  const cuerpo=new THREE.Mesh(geo,M(COL.rosa,0.5));
+  g.add(cuerpo);
+  // perfil dorado (fina capa detrás, ligeramente mayor)
+  const geoB=new THREE.ExtrudeGeometry(s,{depth:0.30,bevelEnabled:true,
+    bevelThickness:0.02,bevelSize:0.09,bevelSegments:3});
+  geoB.center();
+  const perfil=new THREE.Mesh(geoB,oroMat);
+  perfil.position.z=-0.03; perfil.scale.set(1.06,1.06,1); g.add(perfil);
+  g.scale.setScalar(1.5); g.position.set(x,y,z);
+  g.traverse(o=>o.castShadow=true); scene.add(g); return g;
+}
+
+// ================= FIGURAS MODELADAS =================
+function ojos(g,x,y,z,r,sep,depth){
+  const geo=new THREE.SphereGeometry(r,16,16);
+  [-sep,sep].forEach(s=>{
+    const o=new THREE.Mesh(geo,M('#3A2A22',0.3));
+    o.position.set(x+s,y,z+depth); g.add(o);
+    const b=new THREE.Mesh(new THREE.SphereGeometry(r*0.36,10,10),M('#FFFFFF',0.2));
+    b.position.set(x+s-r*0.3,y+r*0.3,z+depth+r*0.7); g.add(b);
+  });
+}
+function lacito(g,x,y,z,s){
+  const lazo=new THREE.Group();
+  const ala=new THREE.SphereGeometry(0.5,14,14); ala.scale(0.9,0.6,0.3);
+  const l=new THREE.Mesh(ala,M(COL.rosa,0.5)); l.position.x=-0.42; lazo.add(l);
+  const r=new THREE.Mesh(ala,M(COL.rosa,0.5)); r.position.x=0.42; lazo.add(r);
+  const nudo=new THREE.Mesh(new THREE.SphereGeometry(0.2,12,12),M(COL.rosaS,0.5)); lazo.add(nudo);
+  lazo.scale.setScalar(s); lazo.position.set(x,y,z); lazo.traverse(o=>o.castShadow=true); g.add(lazo);
+}
+
+function jirafa(x,z,face){
+  const g=new THREE.Group();
+  const cuerpoMat=M(COL.tan,0.55), manchaMat=M(COL.marron,0.6);
+  // cuerpo
+  const cuerpo=new THREE.Mesh(new THREE.SphereGeometry(0.62,24,24),cuerpoMat);
+  cuerpo.scale.set(1,0.95,0.85); cuerpo.position.y=0.6; g.add(cuerpo);
+  // patas delanteras
+  [[-0.28],[0.28]].forEach(([dx])=>{
+    const p=new THREE.Mesh(new THREE.CylinderGeometry(0.15,0.16,0.5,14),cuerpoMat);
+    p.position.set(dx,0.25,0.42); g.add(p);
+    const casco=new THREE.Mesh(new THREE.SphereGeometry(0.16,12,12),manchaMat);
+    casco.scale.set(1,0.7,1); casco.position.set(dx,0.06,0.44); g.add(casco);
+  });
+  // patas traseras (tumbadas)
+  [[-0.42],[0.42]].forEach(([dx])=>{
+    const p=new THREE.Mesh(new THREE.SphereGeometry(0.24,16,16),cuerpoMat);
+    p.scale.set(1.3,0.7,1); p.position.set(dx,0.16,-0.15); g.add(p);
+  });
+  // cuello
+  const cuello=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.26,1.15,16),cuerpoMat);
+  cuello.position.set(0,1.28,0.16); cuello.rotation.x=0.2; g.add(cuello);
+  // cabeza
+  const cabeza=new THREE.Mesh(new THREE.SphereGeometry(0.42,24,24),cuerpoMat);
+  cabeza.scale.set(1,0.92,1.05); cabeza.position.set(0,1.95,0.28); g.add(cabeza);
+  // hocico
+  const hocico=new THREE.Mesh(new THREE.SphereGeometry(0.26,20,20),M(COL.hocico,0.5));
+  hocico.scale.set(1,0.8,0.8); hocico.position.set(0,1.85,0.62); g.add(hocico);
+  // orejas
+  [[-0.42,0.5],[0.42,-0.5]].forEach(([dx,rz])=>{
+    const o=new THREE.Mesh(new THREE.SphereGeometry(0.16,12,12),M(COL.tanS,0.55));
+    o.scale.set(1.6,0.5,1); o.position.set(dx,2.12,0.2); o.rotation.z=rz; g.add(o);
+  });
+  // cuernos (ossicones)
+  [[-0.14],[0.14]].forEach(([dx])=>{
+    const t=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.06,0.24,10),cuerpoMat);
+    t.position.set(dx,2.34,0.22); g.add(t);
+    const b=new THREE.Mesh(new THREE.SphereGeometry(0.1,12,12),manchaMat);
+    b.position.set(dx,2.48,0.22); g.add(b);
+  });
+  // manchas
+  [[-0.3,0.75,0.6],[0.32,0.62,0.55],[0,0.42,0.7],[0.28,0.95,0.5],[-0.28,1.02,0.45],
+   [0,1.5,0.28],[0.05,1.72,0.24]].forEach(([mx,my,mr])=>{
+    const m=new THREE.Mesh(new THREE.SphereGeometry(0.13*mr+0.05,12,12),manchaMat);
+    m.scale.set(1,1,0.4); m.position.set(mx,my,0.55+mr*0.2); g.add(m);
+  });
+  ojos(g,0,1.98,0.6,0.07,0.16,0.06);
+  lacito(g,-0.34,2.16,0.42,0.5);
+  g.rotation.y=face; g.position.set(x,yBase+2.5+2.35,z);
+  g.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});
+  scene.add(g); return g;
+}
+
+function elefante(x,z,face){
+  const g=new THREE.Group();
+  const cuerpoMat=M(COL.gris,0.55);
+  const cuerpo=new THREE.Mesh(new THREE.SphereGeometry(0.6,24,24),cuerpoMat);
+  cuerpo.scale.set(1,0.9,0.85); cuerpo.position.y=0.55; g.add(cuerpo);
+  [[-0.3],[0.3]].forEach(([dx])=>{
+    const p=new THREE.Mesh(new THREE.CylinderGeometry(0.16,0.18,0.34,14),cuerpoMat);
+    p.position.set(dx,0.17,0.28); g.add(p);
+  });
+  const cabeza=new THREE.Mesh(new THREE.SphereGeometry(0.5,24,24),cuerpoMat);
+  cabeza.position.set(0,1.05,0.25); g.add(cabeza);
+  // orejas
+  [[-0.5,0.3],[0.5,-0.3]].forEach(([dx,rz])=>{
+    const o=new THREE.Mesh(new THREE.SphereGeometry(0.36,18,18),M(COL.grisS,0.55));
+    o.scale.set(0.4,1,1); o.position.set(dx,1.05,0.16); o.rotation.z=rz; g.add(o);
+    const oi=new THREE.Mesh(new THREE.SphereGeometry(0.24,14,14),M(COL.rosaL,0.5));
+    oi.scale.set(0.3,1,1); oi.position.set(dx*0.9,1.05,0.28); o.rotation.z=rz; g.add(oi);
+  });
+  // trompa
+  const puntos=[new THREE.Vector3(0,1.05,0.6),new THREE.Vector3(0,0.75,0.78),
+    new THREE.Vector3(0.02,0.5,0.72),new THREE.Vector3(0.12,0.42,0.82)];
+  const trompa=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(puntos),20,0.13,12),cuerpoMat);
+  g.add(trompa);
+  ojos(g,0,1.1,0.5,0.07,0.17,0.04);
+  // mejillas
+  [[-0.26],[0.26]].forEach(([dx])=>{
+    const c=new THREE.Mesh(new THREE.SphereGeometry(0.1,12,12),M(COL.rosa,0.5));
+    c.scale.set(1,0.7,0.4); c.position.set(dx,0.95,0.5); g.add(c);
+  });
+  lacito(g,0.4,1.4,0.3,0.42);
+  g.scale.setScalar(0.92); g.rotation.y=face; g.position.set(x,yBase,z);
+  g.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});
+  scene.add(g); return g;
+}
+
+// ================= COMPOSICIÓN =================
+const FRENTE=Math.PI/2;      // hacia la cámara (+z)
+placa(FRENTE);
+palmera(FRENTE-0.7);
+elefante(0.0, 3.5, 0);       // sobre el plato, apoyado en el piso inferior, al frente
+// hojas y flores sueltas en el piso inferior (frente)
+hoja(1.9,yBase+0.9,2.75,0.5,{x:Math.PI/2-0.3,y:-0.5,z:0.4},M(COL.salvia,0.55));
+hoja(-2.4,yBase+1.0,2.35,0.45,{x:Math.PI/2-0.3,y:0.6,z:-0.4},M(COL.salviaS,0.55));
+flor(2.55,yBase+0.7,2.05,0.5,{y:-0.6},COL.rosaL);
+flor(-2.2,yBase+0.55,2.5,0.45,{y:0.5},COL.blanco);
+racimo(0,0,FRENTE+0.9);
+// hojas sobre el piso superior junto a la placa
+hoja(1.7,yBase+2.5+1.5,1.75,0.4,{x:Math.PI/2-0.3,y:-0.6,z:0.3},M(COL.salvia,0.55));
+hoja(-1.7,yBase+2.5+1.5,1.75,0.4,{x:Math.PI/2-0.3,y:0.6,z:-0.3},M(COL.salviaS,0.55));
+
+// topper
+jirafa(-0.55, 0.65, 0.15);
+numeroUno(0.95, yBase+2.5+2.9, 0.7);
+
+// lazo de oro sobre la banda (frente)
+const oroLazo=new THREE.MeshStandardMaterial({color:new THREE.Color('#D8AE5E'),roughness:0.4,metalness:0.5});
+const lazoOro=new THREE.Group();
+[[-0.30,0.5],[0.30,-0.5]].forEach(([dx,ry])=>{
+  const ala=new THREE.Mesh(new THREE.SphereGeometry(0.28,18,18),oroLazo);
+  ala.scale.set(1,0.72,0.34); ala.position.set(dx,0,0); ala.rotation.y=ry; lazoOro.add(ala);
+  // cola del lazo
+  const cola=new THREE.Mesh(new THREE.ConeGeometry(0.1,0.34,10),oroLazo);
+  cola.position.set(dx*0.7,-0.28,0.02); cola.rotation.z=dx>0?0.3:-0.3; lazoOro.add(cola);
+});
+lazoOro.add(new THREE.Mesh(new THREE.SphereGeometry(0.13,14,14),oroLazo));
+lazoOro.position.set(0,yBase+2.5+0.12,2.33); lazoOro.traverse(o=>o.castShadow=true); scene.add(lazoOro);
+
+// ---------- espera a las fuentes y marca listo ----------
+async function go(){
+  try{ await document.fonts.load('120px "Nothing"'); await document.fonts.ready; }catch(e){}
+  // re-renderiza la placa ahora que la fuente está lista
+  renderer.render(scene,camera);
+  renderer.render(scene,camera);
+  window.__ready=true;
+}
+go();
+</script>
