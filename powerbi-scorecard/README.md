@@ -15,16 +15,30 @@ extraída del fichero Excel de grupo
 ```
 powerbi-scorecard/
 ├── README.md                      ← esta guía (empieza aquí)
+├── pbip/                          ← PROYECTO Power BI listo para abrir (modelo + medidas)
+│   ├── Scorecard.pbip             ← ábrelo en Power BI Desktop
+│   └── README.md                  ← cómo abrirlo y montar los visuales
 ├── data/
-│   ├── Scorecard_Model.xlsx       ← FUENTE para Power BI (3 tablas con nombre)
+│   ├── Scorecard_Model.xlsx       ← FUENTE de datos (3 tablas con nombre)
 │   ├── Dim_KPI.csv                ← catálogo de KPIs
 │   ├── Dim_Date.csv               ← calendario mensual (año fiscal mayo–abril)
 │   └── Fact_Scorecard.csv         ← 1 fila por KPI y mes (Numerator / Denominator)
 ├── dax/
 │   └── measures.dax               ← todas las medidas DAX (valor, RAG, tendencia, YTD…)
-└── docs/
-    └── model_design.md            ← esquema estrella, relaciones y decisiones de diseño
+├── preview/
+│   └── scorecard_preview.html     ← maqueta visual del informe (diseño de referencia)
+├── docs/
+│   └── model_design.md            ← esquema estrella, relaciones y decisiones de diseño
+└── scripts/                       ← pipeline de extracción reproducible
 ```
+
+## Cómo empezar — dos caminos
+
+- **Camino rápido (recomendado, tienes Power BI Desktop):** abre **`pbip/Scorecard.pbip`**.
+  El modelo, las relaciones y las 19 medidas ya vienen montados; solo indicas la ruta del
+  fichero de datos y actualizas. Pasos detallados en **`pbip/README.md`**.
+- **Camino manual (montar desde cero):** importa `data/Scorecard_Model.xlsx` y sigue la
+  guía de más abajo. Útil si prefieres construir el modelo tú o tu Desktop no abre PBIP.
 
 ## Por qué este diseño (y no copiar el Excel tal cual)
 
@@ -60,9 +74,11 @@ no solo la ventana de 12 meses que muestra el Excel.
 
 Ambas con **dirección de filtro único** (de la dimensión al hecho).
 
-### 3. Marcar Dim_Date como tabla de fechas
+### 3. (Opcional) Marcar Dim_Date como tabla de fechas
 Selecciona `Dim_Date` → **Herramientas de tabla → Marcar como tabla de fechas** →
-columna `Date`. *(Necesario para las medidas de mes anterior y YTD.)*
+columna `Date`. Recomendado para inteligencia de tiempo, pero **no imprescindible**:
+las medidas de mes anterior y YTD usan `Dim_Date[Month_Index]`, así que funcionan sin
+marcarla.
 
 ### 4. Añadir las medidas
 Abre `dax/measures.dax` y crea cada medida (**Herramientas de tabla → Nueva medida**).

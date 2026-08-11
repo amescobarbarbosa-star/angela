@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+# artefactos transitorios de la extracción (se regeneran con los scripts)
+model.json
+snapshot.json

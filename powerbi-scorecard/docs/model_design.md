@@ -64,7 +64,8 @@ Ajusta el ±5 % en la medida `RAG Status` si el negocio define otras bandas.
 
 ## Tendencia
 
-`Trend Arrow` compara el mes con el anterior (`DATEADD -1 MONTH`) y muestra ↗ / → / ↘
+`Trend Arrow` compara el mes con el anterior (vía `Dim_Date[Month_Index] - 1`, sin
+depender del marcado de tabla de fechas) y muestra ↗ / → / ↘
 (umbral de "sin cambio" = ±0,5 %). `Trend Color` la pinta verde/rojo según si el
 movimiento es **favorable** para la dirección del KPI (subir es bueno en un `H`, malo
 en un `L`).

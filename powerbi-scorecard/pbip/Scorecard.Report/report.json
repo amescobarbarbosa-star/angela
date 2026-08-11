@@ -1,0 +1,17 @@
+{
+  "config": "{\"version\": \"5.50\", \"activeSectionIndex\": 0, \"settings\": {\"useStylableVisualContainerHeader\": true}}",
+  "layoutOptimization": 0,
+  "sections": [
+    {
+      "name": "sectionScorecard",
+      "displayName": "Scorecard",
+      "filters": "[]",
+      "ordinal": 0,
+      "visualContainers": [],
+      "config": "{}",
+      "displayOption": 1,
+      "width": 1280,
+      "height": 720
+    }
+  ]
+}

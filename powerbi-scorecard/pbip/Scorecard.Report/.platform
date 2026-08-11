@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Scorecard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "cdbb4a19-1a44-4fef-a57a-bf758c91069b"
+  }
+}
