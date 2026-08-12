@@ -1,12 +1,13 @@
 {
-  "name": "5ec1dfcf-8bcf-4730-a433-4d28c5905302",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "6572dc15-751a-475c-8773-4fbe2e023575",
   "position": {
-    "x": 880,
+    "x": 670,
     "y": 0,
-    "z": 4,
+    "z": 1003,
     "width": 200,
     "height": 110,
-    "tabOrder": 4
+    "tabOrder": 3
   },
   "visual": {
     "visualType": "card",
@@ -22,16 +23,19 @@
                       "Entity": "Fact_Scorecard"
                     }
                   },
-                  "Property": "KPIs Red"
+                  "Property": "KPIs Amber"
                 }
               },
-              "queryRef": "Fact_Scorecard.KPIs Red",
-              "nativeQueryRef": "KPIs Red"
+              "queryRef": "Fact_Scorecard.KPIs Amber",
+              "nativeQueryRef": "KPIs Amber"
             }
           ]
         }
       }
     },
-    "objects": {}
-  }
+    "objects": {},
+    "visualContainerObjects": {},
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {}
 }

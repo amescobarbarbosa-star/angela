@@ -32,10 +32,11 @@ pbip/
 ## Sobre los visuales — léelo antes de abrir
 
 Los 6 visuales de la página están escritos directamente en los ficheros del proyecto
-(no se han podido probar en un Power BI Desktop real antes de entregártelos). Cada
-visual es un fichero independiente, así que si alguno no cargara bien, **no afecta a
-los demás ni rompe el proyecto**: basta con borrar su carpeta dentro de
-`.../scorecard/visuals/` y rehacerlo a mano (2 minutos, ver más abajo).
+(no se han podido probar en un Power BI Desktop real antes de entregártelos; están
+basados en la documentación pública del formato PBIR). Cada visual es un fichero
+independiente, así que si alguno no cargara bien, **no afecta a los demás ni rompe el
+proyecto**: basta con borrar su carpeta dentro de `.../scorecard/visuals/` y rehacerlo
+a mano (2 minutos, ver más abajo).
 
 Los 6 visuales, de mayor a menor confianza:
 

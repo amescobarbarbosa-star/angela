@@ -138,14 +138,24 @@ RPPAGES = os.path.join(RPDEF, "pages")
 PAGE = "scorecard"
 os.makedirs(os.path.join(RPPAGES, PAGE), exist_ok=True)
 
+FABRIC_REPORT_DEF = "https://developer.microsoft.com/json-schemas/fabric/item/report/definition"
+
 wj(os.path.join(RPDEF, "report.json"), {
+    "$schema": f"{FABRIC_REPORT_DEF}/report/3.0.0/schema.json",
+    "themeCollection": {},
+    "filterConfig": {},
+    "objects": {},
     "settings": {"useStylableVisualContainerHeader": True},
+    "resourcePackages": [],
+    "annotations": [],
 })
 wj(os.path.join(RPPAGES, "pages.json"), {
+    "$schema": f"{FABRIC_REPORT_DEF}/pagesMetadata/1.0.0/schema.json",
     "pageOrder": [PAGE],
     "activePageName": PAGE,
 })
 wj(os.path.join(RPPAGES, PAGE, "page.json"), {
+    "$schema": f"{FABRIC_REPORT_DEF}/page/2.0.0/schema.json",
     "name": PAGE,
     "displayName": "Scorecard",
     "displayOption": "FitToPage",
@@ -167,14 +177,23 @@ def meas_proj(table, meas):
     return {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": table}}, "Property": meas}},
             "queryRef": f"{table}.{meas}", "nativeQueryRef": meas}
 
-def write_visual(vtype, x, y, w, h, query_state, tab_order):
+def write_visual(vtype, x, y, w, h, query_state, tab_order, z=None):
     vid = str(uuid.uuid4())
     vdir = os.path.join(VIS, vid)
     os.makedirs(vdir, exist_ok=True)
     wj(os.path.join(vdir, "visual.json"), {
+        "$schema": f"{FABRIC_REPORT_DEF}/visualContainer/2.4.0/schema.json",
         "name": vid,
-        "position": {"x": x, "y": y, "z": tab_order, "width": w, "height": h, "tabOrder": tab_order},
-        "visual": {"visualType": vtype, "query": {"queryState": query_state}, "objects": {}},
+        "position": {"x": x, "y": y, "z": z if z is not None else 1000 + tab_order,
+                     "width": w, "height": h, "tabOrder": tab_order},
+        "visual": {
+            "visualType": vtype,
+            "query": {"queryState": query_state},
+            "objects": {},
+            "visualContainerObjects": {},
+            "drillFilterOtherVisuals": True,
+        },
+        "filterConfig": {},
     })
     return vid
 

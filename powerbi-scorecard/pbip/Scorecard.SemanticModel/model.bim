@@ -431,14 +431,14 @@
     ],
     "relationships": [
       {
-        "name": "f02ef33b-c0d4-4bd0-abb7-059c46319b83",
+        "name": "58eb8c46-aed6-43ad-8319-308810670e5f",
         "fromTable": "Fact_Scorecard",
         "fromColumn": "KPI_ID",
         "toTable": "Dim_KPI",
         "toColumn": "KPI_ID"
       },
       {
-        "name": "4954b68e-3e0a-4217-bb4e-212e741b000b",
+        "name": "444ff82c-cb8a-4294-9a8b-5808024685a5",
         "fromTable": "Fact_Scorecard",
         "fromColumn": "Date",
         "toTable": "Dim_Date",
