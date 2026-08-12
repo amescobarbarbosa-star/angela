@@ -1,33 +1,33 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "2210904d-db8c-4f6a-93ca-f29e006a7de1",
+  "name": "387eedf4-a650-4dda-b6c4-c669ba8962db",
   "position": {
-    "x": 460,
+    "x": 0,
     "y": 0,
-    "z": 1002,
-    "width": 200,
-    "height": 110,
-    "tabOrder": 2
+    "z": 1000,
+    "width": 170,
+    "height": 700,
+    "tabOrder": 0
   },
   "visual": {
-    "visualType": "card",
+    "visualType": "slicer",
     "query": {
       "queryState": {
         "Values": {
           "projections": [
             {
               "field": {
-                "Measure": {
+                "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Fact_Scorecard"
+                      "Entity": "Dim_Date"
                     }
                   },
-                  "Property": "KPIs Green"
+                  "Property": "Month_Name"
                 }
               },
-              "queryRef": "Fact_Scorecard.KPIs Green",
-              "nativeQueryRef": "KPIs Green"
+              "queryRef": "Dim_Date.Month_Name",
+              "nativeQueryRef": "Month_Name"
             }
           ]
         }

@@ -18,6 +18,7 @@ pbip/
     ├── definition.pbir
     ├── .platform
     └── definition/
+        ├── version.json                   ← obligatorio (versión del formato PBIR)
         ├── report.json
         └── pages/
             ├── pages.json

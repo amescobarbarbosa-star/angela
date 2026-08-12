@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "9ce98854-b59a-434d-b8c1-b3188ca3f860",
+  "name": "2b7b042c-fac2-4c9d-8535-c6234bca6a4e",
   "position": {
-    "x": 880,
+    "x": 670,
     "y": 0,
-    "z": 1004,
+    "z": 1003,
     "width": 200,
     "height": 110,
-    "tabOrder": 4
+    "tabOrder": 3
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "Fact_Scorecard"
                     }
                   },
-                  "Property": "KPIs Red"
+                  "Property": "KPIs Amber"
                 }
               },
-              "queryRef": "Fact_Scorecard.KPIs Red",
-              "nativeQueryRef": "KPIs Red"
+              "queryRef": "Fact_Scorecard.KPIs Amber",
+              "nativeQueryRef": "KPIs Amber"
             }
           ]
         }

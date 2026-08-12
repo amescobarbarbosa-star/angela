@@ -140,6 +140,14 @@ os.makedirs(os.path.join(RPPAGES, PAGE), exist_ok=True)
 
 FABRIC_REPORT_DEF = "https://developer.microsoft.com/json-schemas/fabric/item/report/definition"
 
+# version.json es OBLIGATORIO: sin él, Power BI Desktop no reconoce la versión
+# del formato de la definición y descarta "pages/" en silencio, cayendo a una
+# página en blanco por defecto ("Página 1") -- exactamente el síntoma visto.
+wj(os.path.join(RPDEF, "version.json"), {
+    "$schema": f"{FABRIC_REPORT_DEF}/versionMetadata/1.0.0/schema.json",
+    "version": "2.0.0",
+})
+
 wj(os.path.join(RPDEF, "report.json"), {
     "$schema": f"{FABRIC_REPORT_DEF}/report/3.0.0/schema.json",
     "themeCollection": {},
