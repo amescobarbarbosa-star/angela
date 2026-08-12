@@ -1,0 +1,37 @@
+{
+  "name": "28a326f0-0aa2-497b-bad5-9c326f73f155",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "width": 170,
+    "height": 700,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Date"
+                    }
+                  },
+                  "Property": "Month_Name"
+                }
+              },
+              "queryRef": "Dim_Date.Month_Name",
+              "nativeQueryRef": "Month_Name"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {}
+  }
+}

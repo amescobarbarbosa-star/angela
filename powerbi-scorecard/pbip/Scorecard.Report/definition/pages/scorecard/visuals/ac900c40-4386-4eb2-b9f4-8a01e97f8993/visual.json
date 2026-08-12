@@ -1,0 +1,37 @@
+{
+  "name": "ac900c40-4386-4eb2-b9f4-8a01e97f8993",
+  "position": {
+    "x": 670,
+    "y": 0,
+    "z": 3,
+    "width": 200,
+    "height": 110,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Scorecard"
+                    }
+                  },
+                  "Property": "KPIs Amber"
+                }
+              },
+              "queryRef": "Fact_Scorecard.KPIs Amber",
+              "nativeQueryRef": "KPIs Amber"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {}
+  }
+}

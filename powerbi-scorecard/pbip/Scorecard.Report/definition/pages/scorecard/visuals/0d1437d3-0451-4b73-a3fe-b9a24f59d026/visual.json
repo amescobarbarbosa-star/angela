@@ -1,0 +1,121 @@
+{
+  "name": "0d1437d3-0451-4b73-a3fe-b9a24f59d026",
+  "position": {
+    "x": 190,
+    "y": 130,
+    "z": 10,
+    "width": 1090,
+    "height": 570,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_KPI"
+                    }
+                  },
+                  "Property": "Perspective"
+                }
+              },
+              "queryRef": "Dim_KPI.Perspective",
+              "nativeQueryRef": "Perspective"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_KPI"
+                    }
+                  },
+                  "Property": "Measure"
+                }
+              },
+              "queryRef": "Dim_KPI.Measure",
+              "nativeQueryRef": "Measure"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_KPI"
+                    }
+                  },
+                  "Property": "Process"
+                }
+              },
+              "queryRef": "Dim_KPI.Process",
+              "nativeQueryRef": "Process"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Scorecard"
+                    }
+                  },
+                  "Property": "KPI Value (fmt)"
+                }
+              },
+              "queryRef": "Fact_Scorecard.KPI Value (fmt)",
+              "nativeQueryRef": "KPI Value (fmt)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Scorecard"
+                    }
+                  },
+                  "Property": "KPI Target"
+                }
+              },
+              "queryRef": "Fact_Scorecard.KPI Target",
+              "nativeQueryRef": "KPI Target"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Scorecard"
+                    }
+                  },
+                  "Property": "Trend Arrow"
+                }
+              },
+              "queryRef": "Fact_Scorecard.Trend Arrow",
+              "nativeQueryRef": "Trend Arrow"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Scorecard"
+                    }
+                  },
+                  "Property": "RAG Status"
+                }
+              },
+              "queryRef": "Fact_Scorecard.RAG Status",
+              "nativeQueryRef": "RAG Status"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {}
+  }
+}

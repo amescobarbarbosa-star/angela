@@ -152,6 +152,52 @@ wj(os.path.join(RPPAGES, PAGE, "page.json"), {
     "height": 720,
     "width": 1280,
 })
+
+# ---- Visuales de la página (mejor esfuerzo: cada visual es un fichero PBIR
+# independiente -- si alguno no renderiza en tu versión de Desktop, se borra
+# su carpeta sin afectar a los demás ni al resto del proyecto). ----
+VIS = os.path.join(RPPAGES, PAGE, "visuals")
+FACT = "Fact_Scorecard"
+
+def col_proj(table, col):
+    return {"field": {"Column": {"Expression": {"SourceRef": {"Entity": table}}, "Property": col}},
+            "queryRef": f"{table}.{col}", "nativeQueryRef": col}
+
+def meas_proj(table, meas):
+    return {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": table}}, "Property": meas}},
+            "queryRef": f"{table}.{meas}", "nativeQueryRef": meas}
+
+def write_visual(vtype, x, y, w, h, query_state, tab_order):
+    vid = str(uuid.uuid4())
+    vdir = os.path.join(VIS, vid)
+    os.makedirs(vdir, exist_ok=True)
+    wj(os.path.join(vdir, "visual.json"), {
+        "name": vid,
+        "position": {"x": x, "y": y, "z": tab_order, "width": w, "height": h, "tabOrder": tab_order},
+        "visual": {"visualType": vtype, "query": {"queryState": query_state}, "objects": {}},
+    })
+    return vid
+
+# Segmentación por mes (columna izquierda)
+write_visual("slicer", 0, 0, 170, 700,
+             {"Values": {"projections": [col_proj("Dim_Date", "Month_Name")]}}, 0)
+
+# Tarjetas de resumen (fila superior)
+for i, (meas, x, w) in enumerate([
+    ("% On Target", 190, 260), ("KPIs Green", 460, 200),
+    ("KPIs Amber", 670, 200), ("KPIs Red", 880, 200),
+]):
+    write_visual("card", x, 0, w, 110,
+                 {"Values": {"projections": [meas_proj(FACT, meas)]}}, i + 1)
+
+# Tabla del scorecard (cuerpo principal)
+write_visual("tableEx", 190, 130, 1090, 570, {"Values": {"projections": [
+    col_proj("Dim_KPI", "Perspective"), col_proj("Dim_KPI", "Measure"),
+    col_proj("Dim_KPI", "Process"), meas_proj(FACT, "KPI Value (fmt)"),
+    meas_proj(FACT, "KPI Target"), meas_proj(FACT, "Trend Arrow"),
+    meas_proj(FACT, "RAG Status"),
+]}}, 10)
+
 wj(os.path.join(RP, "definition.pbir"), {
     "version": "1.0",
     "datasetReference": {"byPath": {"path": "../Scorecard.SemanticModel"}},

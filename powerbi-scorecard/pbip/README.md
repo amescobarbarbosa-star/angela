@@ -1,8 +1,9 @@
 # Proyecto Power BI (PBIP) — Scorecard SSC
 
 Proyecto **Power BI en formato texto (PBIP)** que se abre directamente en Power BI
-Desktop. Trae **el modelo ya montado**: las 3 tablas, las 2 relaciones y **las 19
-medidas DAX**. Solo tienes que abrirlo y actualizar.
+Desktop. Trae **el modelo montado** (3 tablas, 2 relaciones, 19 medidas DAX) **y la
+página "Scorecard" con 6 visuales ya colocados**: segmentación por mes, 4 tarjetas de
+resumen y la tabla del scorecard.
 
 ## Estructura
 
@@ -20,11 +21,32 @@ pbip/
         ├── report.json
         └── pages/
             ├── pages.json
-            └── scorecard/page.json        ← página "Scorecard" (vacía)
+            └── scorecard/
+                ├── page.json
+                └── visuals/                ← 1 carpeta por visual (6 en total)
 ```
 
 > **Importante:** mantén el árbol de carpetas intacto. Power BI necesita esta estructura
 > tal cual para abrir el `.pbip`.
+
+## Sobre los visuales — léelo antes de abrir
+
+Los 6 visuales de la página están escritos directamente en los ficheros del proyecto
+(no se han podido probar en un Power BI Desktop real antes de entregártelos). Cada
+visual es un fichero independiente, así que si alguno no cargara bien, **no afecta a
+los demás ni rompe el proyecto**: basta con borrar su carpeta dentro de
+`.../scorecard/visuals/` y rehacerlo a mano (2 minutos, ver más abajo).
+
+Los 6 visuales, de mayor a menor confianza:
+
+| Visual | Contenido | Tipo |
+|---|---|---|
+| Segmentación | `Dim_Date[Month_Name]` | `slicer` |
+| 4 tarjetas | `% On Target`, `KPIs Green`, `KPIs Amber`, `KPIs Red` | `card` |
+| Tabla scorecard | Perspective, Measure, Process, KPI Value (fmt), KPI Target, Trend Arrow, RAG Status | `tableEx` |
+
+No llevan formato ni colores todavía (título, RAG Color de fondo, anchos de columna) —
+eso se añade en 2 clics una vez confirmes que cargan (ver "Pulir el resultado" abajo).
 
 ## Cómo abrirlo
 
@@ -43,23 +65,29 @@ Las 19 medidas (KPI Value, RAG Status, RAG Color, Trend Arrow, % On Target, …)
 de **`Fact_Scorecard`** (icono de calculadora). Puedes moverlas luego a una carpeta de
 visualización o a una tabla de medidas propia desde Power BI.
 
-## Montar los visuales de la página "Scorecard"
+## Pulir el resultado (una vez cargue la página)
 
-La página viene vacía a propósito (los visuales no se pueden pre-generar de forma fiable
-en texto). Con el modelo ya cargado, se montan en un momento arrastrando campos:
-
-1. **Segmentación (slicer)** → campo `Dim_Date[Month_Name]` (o `Fiscal_Year`).
-2. **Fila de tarjetas** → 4 tarjetas con `[% On Target]`, `[KPIs Green]`, `[KPIs Amber]`,
-   `[KPIs Red]`.
-3. **Matriz del scorecard**:
-   - Filas: `Dim_KPI[Perspective]` y debajo `Dim_KPI[Measure]`.
-   - Valores: `[KPI Value (fmt)]`, `[KPI Target]`, `[Trend Arrow]`, `[RAG Status]`.
-   - Formato condicional del fondo/icono con la medida **`[RAG Color]`**
-     (Formato de la matriz → Elementos de celda → Color de fondo → *Según campo* → `RAG Color`).
-4. **Gráfico de líneas (tendencia)** → Eje `Dim_Date[Date]`, Valores `[KPI Value]`,
-   filtrado a un KPI (o con panel de obtención de detalles por `Measure`).
+1. **Semáforo RAG** en la tabla: selecciónala → **Formato** (pincel) → busca la columna
+   `RAG Status` en **Elementos de celda** → activa **Color de fondo** → **Según campo** →
+   elige la medida `RAG Color` → Aceptar. Las filas se pintan verde/ámbar/rojo.
+2. **Títulos de las tarjetas**: por defecto muestran el nombre de la medida debajo del
+   número; si quieres un texto distinto, Formato → Título de categoría/etiqueta.
+3. **Anchos de columna** de la tabla: arrastra los bordes de cabecera a tu gusto.
+4. (Opcional) **Gráfico de tendencia**: Insertar → Gráfico de líneas → Eje
+   `Dim_Date[Date]`, Valores `[KPI Value]`, filtrado a un KPI.
 
 El diseño de referencia está en `../preview/scorecard_preview.html`.
+
+## Si algún visual no carga (plan B)
+
+Borra su carpeta en `Scorecard.Report/definition/pages/scorecard/visuals/` (identifícala
+abriendo cada `visual.json` y mirando `"visualType"`) y rehazlo a mano:
+
+1. Clic en zona vacía del lienzo → elige el icono del visual en **Visualizaciones**
+   (Segmentación de datos / Tarjeta / Tabla).
+2. Arrastra el campo o medida correspondiente (ver tabla de arriba) a **Valores**.
+
+2 minutos por visual. El modelo (tablas, relaciones, medidas) no se ve afectado por esto.
 
 ## Notas
 
