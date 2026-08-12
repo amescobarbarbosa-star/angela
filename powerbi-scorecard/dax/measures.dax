@@ -1,0 +1,178 @@
+// =====================================================================
+// DS Smith SSC - Balanced Scorecard | Medidas DAX para Power BI
+// ---------------------------------------------------------------------
+// Estas medidas ya vienen incrustadas en el proyecto PBIP (pbip/), en la
+// tabla "Measures". Este fichero es la referencia legible / para copiar a
+// mano si montas el modelo desde el Excel.
+//
+// Modelo esperado:
+//   Dim_KPI[KPI_ID]  1 --- *  Fact_Scorecard[KPI_ID]
+//   Dim_Date[Date]   1 --- *  Fact_Scorecard[Date]
+// Las medidas de mes anterior y YTD usan Dim_Date[Month_Index] (mes
+// consecutivo), por lo que NO dependen de marcar Dim_Date como tabla de fechas.
+// =====================================================================
+
+KPI Value =
+    VAR vt = SELECTEDVALUE ( Dim_KPI[Value_Type] )
+    VAR n  = SUM ( Fact_Scorecard[Numerator] )
+    VAR d  = SUM ( Fact_Scorecard[Denominator] )
+    RETURN
+        SWITCH (
+            vt,
+            "PCT",      DIVIDE ( n, d ),
+            "RATE1000", DIVIDE ( n, d ) * 1000,
+            "RATIO",    DIVIDE ( n, d ),
+            "CURRENCY", n,
+            "COUNT",    n,
+            n
+        )
+
+
+KPI Value (fmt) =
+    VAR v  = [KPI Value]
+    VAR vt = SELECTEDVALUE ( Dim_KPI[Value_Type] )
+    RETURN
+        IF (
+            ISBLANK ( v ), "-",
+            SWITCH (
+                vt,
+                "PCT",      FORMAT ( v, "0.0%" ),
+                "RATE1000", FORMAT ( v, "#,##0.0" ) & " /1k",
+                "RATIO",    FORMAT ( v, "#,##0.00" ),
+                "CURRENCY", FORMAT ( v, "#,##0" ) & " k€",
+                "COUNT",    FORMAT ( v, "#,##0" ),
+                FORMAT ( v, "#,##0.00" )
+            )
+        )
+
+
+KPI Target =
+    SELECTEDVALUE ( Dim_KPI[Target] )
+
+
+Variance to Target =
+    IF ( ISBLANK ( [KPI Target] ), BLANK (), [KPI Value] - [KPI Target] )
+
+
+Variance % =
+    DIVIDE ( [KPI Value] - [KPI Target], [KPI Target] )
+    // formato: 0.0%
+
+
+RAG Status =
+    VAR v   = [KPI Value]
+    VAR t   = [KPI Target]
+    VAR dir = SELECTEDVALUE ( Dim_KPI[Direction] )
+    RETURN
+        SWITCH (
+            TRUE (),
+            ISBLANK ( v ) || ISBLANK ( t ) || dir = "N", "No target",
+            dir = "H" && v >= t,        "Green",
+            dir = "H" && v >= t * 0.95, "Amber",
+            dir = "H",                  "Red",
+            dir = "L" && v <= t,        "Green",
+            dir = "L" && v <= t * 1.05, "Amber",
+            dir = "L",                  "Red",
+            "No target"
+        )
+
+
+RAG Color =
+    SWITCH (
+        [RAG Status],
+        "Green",     "#2E7D32",
+        "Amber",     "#F9A825",
+        "Red",       "#C62828",
+        "No target", "#9E9E9E",
+        "#9E9E9E"
+    )
+
+
+KPI Value PM =
+    // Mes anterior por índice de mes (no requiere marcar tabla de fechas)
+    VAR idx = SELECTEDVALUE ( Dim_Date[Month_Index] )
+    RETURN
+        CALCULATE (
+            [KPI Value],
+            REMOVEFILTERS ( Dim_Date ),
+            Dim_Date[Month_Index] = idx - 1
+        )
+
+
+MoM Change =
+    IF ( ISBLANK ( [KPI Value PM] ), BLANK (), [KPI Value] - [KPI Value PM] )
+
+
+MoM Change % =
+    DIVIDE ( [KPI Value] - [KPI Value PM], [KPI Value PM] )
+    // formato: 0.0%
+
+
+Trend Arrow =
+    VAR delta = [KPI Value] - [KPI Value PM]
+    VAR base  = [KPI Value PM]
+    VAR pct   = DIVIDE ( delta, ABS ( base ) )
+    RETURN
+        SWITCH (
+            TRUE (),
+            ISBLANK ( [KPI Value PM] ) || ISBLANK ( [KPI Value] ), "",
+            ABS ( pct ) < 0.005, "→",
+            delta > 0,           "↗",
+            "↘"
+        )
+
+
+Trend Color =
+    VAR delta = [KPI Value] - [KPI Value PM]
+    VAR dir   = SELECTEDVALUE ( Dim_KPI[Direction] )
+    RETURN
+        SWITCH (
+            TRUE (),
+            dir = "N" || ISBLANK ( delta ) || delta = 0, "#9E9E9E",
+            ( dir = "H" && delta > 0 ) || ( dir = "L" && delta < 0 ), "#2E7D32",
+            "#C62828"
+        )
+
+
+KPI Value YTD =
+    // YTD del año fiscal DS Smith (mayo-abril)
+    VAR fy     = SELECTEDVALUE ( Dim_Date[Fiscal_Year] )
+    VAR maxIdx = MAX ( Dim_Date[Month_Index] )
+    RETURN
+        CALCULATE (
+            [KPI Value],
+            REMOVEFILTERS ( Dim_Date ),
+            Dim_Date[Fiscal_Year] = fy,
+            Dim_Date[Month_Index] <= maxIdx
+        )
+
+
+KPIs Green =
+    SUMX ( VALUES ( Dim_KPI[KPI_ID] ), IF ( [RAG Status] = "Green", 1, 0 ) )
+    // formato: 0
+
+
+KPIs Amber =
+    SUMX ( VALUES ( Dim_KPI[KPI_ID] ), IF ( [RAG Status] = "Amber", 1, 0 ) )
+    // formato: 0
+
+
+KPIs Red =
+    SUMX ( VALUES ( Dim_KPI[KPI_ID] ), IF ( [RAG Status] = "Red", 1, 0 ) )
+    // formato: 0
+
+
+KPIs Measured =
+    SUMX ( VALUES ( Dim_KPI[KPI_ID] ), IF ( NOT ISBLANK ( [KPI Value] ), 1, 0 ) )
+    // formato: 0
+
+
+% On Target =
+    DIVIDE ( [KPIs Green], [KPIs Green] + [KPIs Amber] + [KPIs Red] )
+    // formato: 0.0%
+
+
+Selected Month Label =
+    "A fecha de " & FORMAT ( MAX ( Dim_Date[Date] ), "MMM yyyy" )
+
+

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "f6d21d5f89c14f1484ba",
+  "position": {
+    "x": 880,
+    "y": 0,
+    "z": 4,
+    "height": 110,
+    "width": 200
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Scorecard"
+                    }
+                  },
+                  "Property": "KPIs Red"
+                }
+              },
+              "queryRef": "Fact_Scorecard.KPIs Red",
+              "nativeQueryRef": "KPIs Red"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {}
+}

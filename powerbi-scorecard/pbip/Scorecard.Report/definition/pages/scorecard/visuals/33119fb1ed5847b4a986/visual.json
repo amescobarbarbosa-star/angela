@@ -1,0 +1,122 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "33119fb1ed5847b4a986",
+  "position": {
+    "x": 190,
+    "y": 130,
+    "z": 10,
+    "height": 570,
+    "width": 1090
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_KPI"
+                    }
+                  },
+                  "Property": "Perspective"
+                }
+              },
+              "queryRef": "Dim_KPI.Perspective",
+              "nativeQueryRef": "Perspective"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_KPI"
+                    }
+                  },
+                  "Property": "Measure"
+                }
+              },
+              "queryRef": "Dim_KPI.Measure",
+              "nativeQueryRef": "Measure"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_KPI"
+                    }
+                  },
+                  "Property": "Process"
+                }
+              },
+              "queryRef": "Dim_KPI.Process",
+              "nativeQueryRef": "Process"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Scorecard"
+                    }
+                  },
+                  "Property": "KPI Value (fmt)"
+                }
+              },
+              "queryRef": "Fact_Scorecard.KPI Value (fmt)",
+              "nativeQueryRef": "KPI Value (fmt)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Scorecard"
+                    }
+                  },
+                  "Property": "KPI Target"
+                }
+              },
+              "queryRef": "Fact_Scorecard.KPI Target",
+              "nativeQueryRef": "KPI Target"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Scorecard"
+                    }
+                  },
+                  "Property": "Trend Arrow"
+                }
+              },
+              "queryRef": "Fact_Scorecard.Trend Arrow",
+              "nativeQueryRef": "Trend Arrow"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Scorecard"
+                    }
+                  },
+                  "Property": "RAG Status"
+                }
+              },
+              "queryRef": "Fact_Scorecard.RAG Status",
+              "nativeQueryRef": "RAG Status"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {}
+}
