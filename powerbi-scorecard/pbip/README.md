@@ -13,10 +13,14 @@ pbip/
 │   ├── model.bim                          ← modelo (tablas, relaciones, medidas)
 │   ├── definition.pbism
 │   └── .platform
-└── Scorecard.Report/
-    ├── report.json                        ← informe con una página "Scorecard" (vacía)
+└── Scorecard.Report/                      ← informe en formato PBIR (por carpetas)
     ├── definition.pbir
-    └── .platform
+    ├── .platform
+    └── definition/
+        ├── report.json
+        └── pages/
+            ├── pages.json
+            └── scorecard/page.json        ← página "Scorecard" (vacía)
 ```
 
 > **Importante:** mantén el árbol de carpetas intacto. Power BI necesita esta estructura
@@ -35,9 +39,8 @@ pbip/
 3. **Inicio → Actualizar** (o *Cerrar y aplicar* si estás en el editor de Power Query). Ya
    tienes el modelo con datos.
 
-A partir de aquí tienes en el panel de campos las 3 tablas. Las 19 medidas (KPI Value,
-RAG Status, RAG Color, Trend Arrow, % On Target, …) están dentro de **`Fact_Scorecard`**
-(marcadas con el icono de calculadora). Si prefieres, puedes moverlas a una carpeta de
+Las 19 medidas (KPI Value, RAG Status, RAG Color, Trend Arrow, % On Target, …) están dentro
+de **`Fact_Scorecard`** (icono de calculadora). Puedes moverlas luego a una carpeta de
 visualización o a una tabla de medidas propia desde Power BI.
 
 ## Montar los visuales de la página "Scorecard"
@@ -60,8 +63,8 @@ El diseño de referencia está en `../preview/scorecard_preview.html`.
 
 ## Notas
 
-- El modelo se genera con `../scripts/build_pbip.py` a partir de la definición única de
-  medidas (`../scripts/measures_def.py`), de modo que el PBIP y `../dax/measures.dax`
+- El modelo y el informe se generan con `../scripts/build_pbip.py` a partir de la definición
+  única de medidas (`../scripts/measures_def.py`), de modo que el PBIP y `../dax/measures.dax`
   quedan siempre sincronizados.
-- Formato `model.bim` (TMSL). Si tu versión de Power BI Desktop diera algún problema con el
-  informe o el modelo, avísame con el mensaje de error y lo regenero en el formato que pida.
+- Modelo en formato `model.bim` (TMSL); informe en formato PBIR (carpetas). Si tu versión de
+  Power BI Desktop diera algún problema, avísame con el mensaje de error y lo regenero.

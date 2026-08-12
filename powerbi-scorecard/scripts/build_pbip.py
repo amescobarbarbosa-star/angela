@@ -5,7 +5,7 @@ medidas ya incrustadas, más un informe base con una página vacía.
 
 La fuente de datos es un parámetro `SourceFile` (ruta al Scorecard_Model.xlsx).
 Al abrir el .pbip, ajusta ese parámetro a tu ruta local y pulsa Actualizar."""
-import json, os, sys, uuid
+import json, os, sys, uuid, shutil
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from measures_def import MEASURES
@@ -14,7 +14,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PBIP = os.path.join(ROOT, "pbip")
 SM = os.path.join(PBIP, "Scorecard.SemanticModel")
 RP = os.path.join(PBIP, "Scorecard.Report")
+# Limpia solo las carpetas de artefactos (conserva pbip/README.md y otros).
 for d in (SM, RP):
+    if os.path.isdir(d):
+        shutil.rmtree(d)
     os.makedirs(d, exist_ok=True)
 
 # ---- esquema de las tablas: (col, dataType TMSL, tipo M, summarizeBy) ----
@@ -128,28 +131,27 @@ wj(os.path.join(SM, ".platform"), {
     "config": {"version": "2.0", "logicalId": str(uuid.uuid4())},
 })
 
-# ---- Report (una página vacía; los visuales se montan con la guía) ----
-report_config = {
-    "version": "5.50",
-    "activeSectionIndex": 0,
+# ---- Report en formato PBIR (carpeta definition/) — una página vacía ----
+# El Power BI Desktop reciente usa PBIR (por carpetas), no el report.json plano.
+RPDEF = os.path.join(RP, "definition")
+RPPAGES = os.path.join(RPDEF, "pages")
+PAGE = "scorecard"
+os.makedirs(os.path.join(RPPAGES, PAGE), exist_ok=True)
+
+wj(os.path.join(RPDEF, "report.json"), {
     "settings": {"useStylableVisualContainerHeader": True},
-}
-report_json = {
-    "config": json.dumps(report_config),
-    "layoutOptimization": 0,
-    "sections": [{
-        "name": "sectionScorecard",
-        "displayName": "Scorecard",
-        "filters": "[]",
-        "ordinal": 0,
-        "visualContainers": [],
-        "config": "{}",
-        "displayOption": 1,
-        "width": 1280,
-        "height": 720,
-    }],
-}
-wj(os.path.join(RP, "report.json"), report_json)
+})
+wj(os.path.join(RPPAGES, "pages.json"), {
+    "pageOrder": [PAGE],
+    "activePageName": PAGE,
+})
+wj(os.path.join(RPPAGES, PAGE, "page.json"), {
+    "name": PAGE,
+    "displayName": "Scorecard",
+    "displayOption": "FitToPage",
+    "height": 720,
+    "width": 1280,
+})
 wj(os.path.join(RP, "definition.pbir"), {
     "version": "1.0",
     "datasetReference": {"byPath": {"path": "../Scorecard.SemanticModel"}},
