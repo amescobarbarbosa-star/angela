@@ -222,33 +222,6 @@
               ]
             }
           }
-        ]
-      },
-      {
-        "name": "Measures",
-        "columns": [
-          {
-            "name": "Col",
-            "dataType": "string",
-            "sourceColumn": "Col",
-            "isHidden": true,
-            "summarizeBy": "none"
-          }
-        ],
-        "partitions": [
-          {
-            "name": "Measures",
-            "mode": "import",
-            "source": {
-              "type": "m",
-              "expression": [
-                "let",
-                "    Source = #table(type table [Col = text], {})",
-                "in",
-                "    Source"
-              ]
-            }
-          }
         ],
         "measures": [
           {
@@ -458,14 +431,14 @@
     ],
     "relationships": [
       {
-        "name": "d7ee30b5-daac-4636-945b-e552d5320c40",
+        "name": "ed8e94ca-4670-42c5-8f9c-492f254d19ad",
         "fromTable": "Fact_Scorecard",
         "fromColumn": "KPI_ID",
         "toTable": "Dim_KPI",
         "toColumn": "KPI_ID"
       },
       {
-        "name": "082042b9-c4f5-49d7-aac8-5397238d8c2b",
+        "name": "bb31f4b6-cca1-454e-bd31-66473b83b7ee",
         "fromTable": "Fact_Scorecard",
         "fromColumn": "Date",
         "toTable": "Dim_Date",

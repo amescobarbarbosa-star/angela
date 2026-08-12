@@ -71,23 +71,16 @@ def table_obj(name):
                         "source": {"type": "m", "expression": m_partition(name)}}],
     }
 
-measures_tbl = {
-    "name": "Measures",
-    "columns": [{"name": "Col", "dataType": "string", "sourceColumn": "Col",
-                 "isHidden": True, "summarizeBy": "none"}],
-    "partitions": [{"name": "Measures", "mode": "import",
-                    "source": {"type": "m", "expression": [
-                        "let",
-                        "    Source = #table(type table [Col = text], {})",
-                        "in",
-                        "    Source"]}}],
-    "measures": [],
-}
-for name, fmt, lines in MEASURES:
-    mo = {"name": name, "expression": lines}
-    if fmt:
-        mo["formatString"] = fmt
-    measures_tbl["measures"].append(mo)
+# Las medidas se alojan en Fact_Scorecard (tabla con datos reales). Una tabla
+# "solo-medidas" vacía no la admiten todas las versiones de Power BI Desktop.
+def measure_objs():
+    out = []
+    for name, fmt, lines in MEASURES:
+        mo = {"name": name, "expression": lines}
+        if fmt:
+            mo["formatString"] = fmt
+        out.append(mo)
+    return out
 
 source_file_param = {
     "name": "SourceFile",
@@ -108,7 +101,7 @@ model_bim = {
         "dataAccessOptions": {"legacyRedirects": True, "returnErrorValuesAsNull": True},
         "expressions": [source_file_param],
         "tables": [table_obj("Dim_KPI"), table_obj("Dim_Date"),
-                   table_obj("Fact_Scorecard"), measures_tbl],
+                   {**table_obj("Fact_Scorecard"), "measures": measure_objs()}],
         "relationships": [
             {"name": str(uuid.uuid4()), "fromTable": "Fact_Scorecard", "fromColumn": "KPI_ID",
              "toTable": "Dim_KPI", "toColumn": "KPI_ID"},
@@ -177,4 +170,4 @@ wj(os.path.join(PBIP, "Scorecard.pbip"), {
 
 print("PBIP generado en", PBIP)
 print("Tablas:", [t["name"] for t in model_bim["model"]["tables"]])
-print("Medidas:", len(measures_tbl["measures"]))
+print("Medidas (en Fact_Scorecard):", len(MEASURES))

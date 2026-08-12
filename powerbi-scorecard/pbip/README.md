@@ -35,8 +35,10 @@ pbip/
 3. **Inicio → Actualizar** (o *Cerrar y aplicar* si estás en el editor de Power Query). Ya
    tienes el modelo con datos.
 
-A partir de aquí tienes en el panel de campos las 3 tablas y, en **`Measures`**, las 19
-medidas listas (KPI Value, RAG Status, RAG Color, Trend Arrow, % On Target, …).
+A partir de aquí tienes en el panel de campos las 3 tablas. Las 19 medidas (KPI Value,
+RAG Status, RAG Color, Trend Arrow, % On Target, …) están dentro de **`Fact_Scorecard`**
+(marcadas con el icono de calculadora). Si prefieres, puedes moverlas a una carpeta de
+visualización o a una tabla de medidas propia desde Power BI.
 
 ## Montar los visuales de la página "Scorecard"
 
