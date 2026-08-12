@@ -131,14 +131,30 @@ wj(os.path.join(SM, ".platform"), {
     "config": {"version": "2.0", "logicalId": str(uuid.uuid4())},
 })
 
-# ---- Report en formato PBIR (carpeta definition/) — una página vacía ----
+# ---- Report en formato PBIR (carpeta definition/) ----
 # El Power BI Desktop reciente usa PBIR (por carpetas), no el report.json plano.
+#
+# IDs y versiones de $schema verificados contra ficheros REALES generados por
+# Power BI Desktop de la usuaria (creó una página + un visual a mano, los
+# guardó y nos pasó su contenido): los "name" son cadenas hex de 20
+# caracteres sin guiones (no GUIDs), page usa schema page/2.1.0, y
+# visualContainer usa 2.10.0 -- ambos más nuevos que lo documentado
+# públicamente. "position" no lleva "tabOrder", y "objects"/
+# "visualContainerObjects" se omiten por completo cuando están vacíos (Power
+# BI no los escribe si no hay formato personalizado).
 RPDEF = os.path.join(RP, "definition")
 RPPAGES = os.path.join(RPDEF, "pages")
-PAGE = "scorecard"
-os.makedirs(os.path.join(RPPAGES, PAGE), exist_ok=True)
+PAGE_FOLDER = "scorecard"          # nombre de carpeta (libre, solo legible)
+os.makedirs(os.path.join(RPPAGES, PAGE_FOLDER), exist_ok=True)
 
 FABRIC_REPORT_DEF = "https://developer.microsoft.com/json-schemas/fabric/item/report/definition"
+
+def genid():
+    """Cadena hex de 20 caracteres, igual que los 'name' que genera Power BI
+    Desktop realmente (verificado; no son GUID con guiones)."""
+    return uuid.uuid4().hex[:20]
+
+PAGE_ID = genid()   # identificador interno de la página (referenciado en pages.json)
 
 # version.json es OBLIGATORIO: sin él, Power BI Desktop no reconoce la versión
 # del formato de la definición y descarta "pages/" en silencio, cayendo a una
@@ -159,12 +175,12 @@ wj(os.path.join(RPDEF, "report.json"), {
 })
 wj(os.path.join(RPPAGES, "pages.json"), {
     "$schema": f"{FABRIC_REPORT_DEF}/pagesMetadata/1.0.0/schema.json",
-    "pageOrder": [PAGE],
-    "activePageName": PAGE,
+    "pageOrder": [PAGE_ID],
+    "activePageName": PAGE_ID,
 })
-wj(os.path.join(RPPAGES, PAGE, "page.json"), {
-    "$schema": f"{FABRIC_REPORT_DEF}/page/2.0.0/schema.json",
-    "name": PAGE,
+wj(os.path.join(RPPAGES, PAGE_FOLDER, "page.json"), {
+    "$schema": f"{FABRIC_REPORT_DEF}/page/2.1.0/schema.json",
+    "name": PAGE_ID,
     "displayName": "Scorecard",
     "displayOption": "FitToPage",
     "height": 720,
@@ -174,7 +190,7 @@ wj(os.path.join(RPPAGES, PAGE, "page.json"), {
 # ---- Visuales de la página (mejor esfuerzo: cada visual es un fichero PBIR
 # independiente -- si alguno no renderiza en tu versión de Desktop, se borra
 # su carpeta sin afectar a los demás ni al resto del proyecto). ----
-VIS = os.path.join(RPPAGES, PAGE, "visuals")
+VIS = os.path.join(RPPAGES, PAGE_FOLDER, "visuals")
 FACT = "Fact_Scorecard"
 
 def col_proj(table, col):
@@ -185,20 +201,17 @@ def meas_proj(table, meas):
     return {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": table}}, "Property": meas}},
             "queryRef": f"{table}.{meas}", "nativeQueryRef": meas}
 
-def write_visual(vtype, x, y, w, h, query_state, tab_order, z=None):
-    vid = str(uuid.uuid4())
+def write_visual(vtype, x, y, w, h, query_state, z):
+    vid = genid()
     vdir = os.path.join(VIS, vid)
     os.makedirs(vdir, exist_ok=True)
     wj(os.path.join(vdir, "visual.json"), {
-        "$schema": f"{FABRIC_REPORT_DEF}/visualContainer/2.4.0/schema.json",
+        "$schema": f"{FABRIC_REPORT_DEF}/visualContainer/2.10.0/schema.json",
         "name": vid,
-        "position": {"x": x, "y": y, "z": z if z is not None else 1000 + tab_order,
-                     "width": w, "height": h, "tabOrder": tab_order},
+        "position": {"x": x, "y": y, "z": z, "height": h, "width": w},
         "visual": {
             "visualType": vtype,
             "query": {"queryState": query_state},
-            "objects": {},
-            "visualContainerObjects": {},
             "drillFilterOtherVisuals": True,
         },
         "filterConfig": {},
