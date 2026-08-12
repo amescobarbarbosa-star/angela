@@ -2,7 +2,7 @@
 
 Proyecto **Power BI en formato texto (PBIP)** que se abre directamente en Power BI
 Desktop. Trae **el modelo ya montado**: las 3 tablas, las 2 relaciones y **las 19
-medidas DAX**. Solo tienes que indicar dónde está el fichero de datos y actualizar.
+medidas DAX**. Solo tienes que abrirlo y actualizar.
 
 ## Estructura
 
@@ -19,16 +19,21 @@ pbip/
     └── .platform
 ```
 
-## Cómo abrirlo (primera vez)
+> **Importante:** mantén el árbol de carpetas intacto. Power BI necesita esta estructura
+> tal cual para abrir el `.pbip`.
+
+## Cómo abrirlo
 
 1. Doble clic en **`Scorecard.pbip`** (o Power BI Desktop → Archivo → Abrir → el `.pbip`).
    > Si Power BI te pide activar el formato de proyecto: Archivo → Opciones → Características
    > de versión preliminar → **Power BI Project (.pbip) save option** → reinicia.
-2. Al abrir, el modelo carga con un error de origen (aún no sabe dónde está el Excel). Ve a
-   **Transformar datos → Administrar parámetros** y pon **`SourceFile`** con la ruta local
-   completa a tu fichero, por ejemplo:
-   `C:\Users\TuUsuario\...\powerbi-scorecard\data\Scorecard_Model.xlsx`
-3. **Cerrar y aplicar** → **Inicio → Actualizar**. Ya tienes el modelo con datos.
+2. El parámetro **`SourceFile`** ya viene pre-rellenado a
+   `C:\Users\esangesc\Downloads\powerbiscorecard\powerbi-scorecard\data\Scorecard_Model.xlsx`.
+   - Si mantienes la carpeta ahí, no tienes que tocar nada.
+   - Si la mueves, ve a **Transformar datos → Administrar parámetros** y cambia `SourceFile`
+     por la nueva ruta completa al `Scorecard_Model.xlsx`.
+3. **Inicio → Actualizar** (o *Cerrar y aplicar* si estás en el editor de Power Query). Ya
+   tienes el modelo con datos.
 
 A partir de aquí tienes en el panel de campos las 3 tablas y, en **`Measures`**, las 19
 medidas listas (KPI Value, RAG Status, RAG Color, Trend Arrow, % On Target, …).
@@ -51,16 +56,10 @@ en texto). Con el modelo ya cargado, se montan en un momento arrastrando campos:
 
 El diseño de referencia está en `../preview/scorecard_preview.html`.
 
-## Cambiar la fuente a los CSV (opcional)
-
-Si prefieres alimentar el modelo desde los CSV en vez del Excel, cambia el parámetro por
-la carpeta y ajusta las consultas (Excel.Workbook → Csv.Document). El Excel es la opción
-recomendada porque conserva los tipos y los nombres de tabla.
-
 ## Notas
 
 - El modelo se genera con `../scripts/build_pbip.py` a partir de la definición única de
   medidas (`../scripts/measures_def.py`), de modo que el PBIP y `../dax/measures.dax`
   quedan siempre sincronizados.
-- Formato `model.bim` (TMSL). Si tu versión de Power BI Desktop solo aceptara TMDL,
-  avísame y regenero el modelo en ese formato.
+- Formato `model.bim` (TMSL). Si tu versión de Power BI Desktop diera algún problema con el
+  informe o el modelo, avísame con el mensaje de error y lo regenero en el formato que pida.

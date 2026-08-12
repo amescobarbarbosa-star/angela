@@ -14,7 +14,7 @@
         "name": "SourceFile",
         "kind": "m",
         "expression": [
-          "\"C:\\Users\\YOU\\Documents\\powerbi-scorecard\\data\\Scorecard_Model.xlsx\"",
+          "\"C:\\Users\\esangesc\\Downloads\\powerbiscorecard\\powerbi-scorecard\\data\\Scorecard_Model.xlsx\"",
           "  meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]"
         ]
       }
@@ -458,14 +458,14 @@
     ],
     "relationships": [
       {
-        "name": "875541bb-01ad-491f-a039-8609ea1e1d0f",
+        "name": "d7ee30b5-daac-4636-945b-e552d5320c40",
         "fromTable": "Fact_Scorecard",
         "fromColumn": "KPI_ID",
         "toTable": "Dim_KPI",
         "toColumn": "KPI_ID"
       },
       {
-        "name": "e10e0e08-80f6-40ac-87eb-663ea9802a58",
+        "name": "082042b9-c4f5-49d7-aac8-5397238d8c2b",
         "fromTable": "Fact_Scorecard",
         "fromColumn": "Date",
         "toTable": "Dim_Date",

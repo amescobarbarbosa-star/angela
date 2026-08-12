@@ -93,7 +93,7 @@ source_file_param = {
     "name": "SourceFile",
     "kind": "m",
     "expression": [
-        '"C:\\Users\\YOU\\Documents\\powerbi-scorecard\\data\\Scorecard_Model.xlsx"',
+        '"C:\\Users\\esangesc\\Downloads\\powerbiscorecard\\powerbi-scorecard\\data\\Scorecard_Model.xlsx"',
         '  meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]',
     ],
 }
@@ -169,7 +169,7 @@ wj(os.path.join(RP, ".platform"), {
 
 # ---- .pbip raíz ----
 wj(os.path.join(PBIP, "Scorecard.pbip"), {
-    "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/pbip/definitionProperties/1.0.0/schema.json",
+    "$schema": "https://developer.microsoft.com/json-schemas/fabric/pbip/pbipProperties/1.0.0/schema.json",
     "version": "1.0",
     "artifacts": [{"report": {"path": "Scorecard.Report"}}],
     "settings": {"enableAutoRecovery": True},
