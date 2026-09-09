@@ -1,0 +1,15 @@
+{
+  "name": "expensys-presentacion-director",
+  "private": true,
+  "description": "Genera la presentación (2 diapositivas) del proceso de contabilización de notas de gasto (Expensys) para el director del centro.",
+  "scripts": {
+    "generate": "node src/generate.js"
+  },
+  "dependencies": {
+    "pptxgenjs": "^4.0.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-icons": "^5.7.0",
+    "sharp": "^0.35.4"
+  }
+}
